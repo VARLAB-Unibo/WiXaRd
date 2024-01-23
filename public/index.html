@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="/res/aton-logo.png" sizes="512x512" type="image/png">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="ATON Framework">
+    <link rel="apple-touch-icon" href="/res/aton-logo.png">
+    <meta name="description" content="ATON Framework">
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000"/>
+
+    <title>ATON Framework</title>
+    <link rel="stylesheet" type="text/css" href="res/css/aton.css">
+    <script type="text/javascript" src="vendors/vendors.min.js"></script>
+    <script type="text/javascript" src="dist/THREE.bundle.js"></script>
+    <script type="text/javascript" src="dist/ATON.min.js"></script>
+    <script type="text/javascript" src="shu/shu.js"></script>
+
+    <script>
+        let urlParams = new URLSearchParams(window.location.search);
+        let query = urlParams.get('q');
+        let bg = urlParams.get('bg');
+        let hide = urlParams.get('hide');
+        let tb = urlParams.get('tb');
+
+        let opts = {
+            view: {}
+        };
+
+        let ohide = {}
+        if (hide) {
+            hide = hide.split(",");
+            for (let i in hide) ohide[hide[i]] = 1;
+        }
+
+        if (tb) opts.view.tb = tb;
+
+        let openSID = () => {
+            let sid = $("#sid").val();
+            if (sid && sid.length > 1) SHU.goToScene(sid);
+        };
+
+        let showAllScenes = () => {
+            $('.atonGalleryItem').each(function () {
+                $(this).show(/*"scale"*/);
+            });
+        };
+
+
+        // Search
+        let search = () => {
+            let searchTerm = $("#sid").val().trim().toLowerCase();
+            searchTerm = searchTerm.split(" ")[0];
+
+            searchByTerm(searchTerm);
+
+            if (searchTerm.includes("/")) $("#btn-go").show();
+            else $("#btn-go").hide();
+        };
+
+        let searchByTerm = (searchTerm) => {
+            if (searchTerm === undefined) return;
+
+            if (searchTerm.length < 3 || searchTerm.includes("/")) {
+                showAllScenes();
+                return;
+            }
+
+            $('.atonGalleryItem').each(function () {
+                if ($(this).filter('[data-search-term*=' + searchTerm + ']').length > 0 || searchTerm.length < 1) {
+                    $(this).show(/*"scale"*/);
+                } else $(this).hide(/*"scale"*/);
+            });
+        };
+
+        let onLandingData = (data) => {
+            let htmlcontent = "";
+
+            // Custom bg color
+            if (bg) {
+                $("body").css({
+                    "background-color": "rgba(" + bg + ")",
+                    "background-image": "none"
+                });
+            }
+
+            if (query) {
+                if (!ohide["term"]) htmlcontent += "<div id='gTitle' class='atonBlockTitle'>" + query + "</div><br>";
+                htmlcontent += "<div id='idPubGallery'></div>";
+
+                htmlcontent += "<br><br>";
+
+                $("#idMainContent").html(htmlcontent);
+
+                if (ohide["authors"]) opts.hideAuthors = true;
+
+                SHU.createPubScenesGallery("idPubGallery", data.samples, () => {
+                    searchByTerm(query);
+                }, opts);
+
+                return;
+            }
+
+            if (data.redirect !== undefined) {
+                window.location.replace(data.redirect);
+                return;
+            }
+
+            if (data.header) {
+                htmlcontent += "<div class='atonHeader'>";
+                htmlcontent += data.header;
+                htmlcontent += "</div>";
+            } else {
+                htmlcontent += "<img src='/res/aton-logo.png' style='width:100px; height:auto;'><br>";
+            }
+
+            if (data.gallery) {
+                htmlcontent += "<a href='shu/scenes/' class='atonBTN'><img src='" + ATON.PATH_RES + "icons/user.png'></a>";
+                htmlcontent += "<div id='idScenes' style='display:inline-block; width:50%; max-width:500px; margin-right:15px'></div>";
+                htmlcontent += "<div id='btn-go' class='atonBTN atonBTN-green' style='display:inline-block;'><img src='" + ATON.PATH_RES + "icons/play.png'></div>";
+                if (data.samples === undefined || data.samples === true) htmlcontent += "<a href='examples/' class='atonBTN'><img src='" + ATON.PATH_RES + "icons/samples.png'></a>";
+                htmlcontent += "<br><br>";
+
+                //htmlcontent += "<div class='atonBlockTitle'>Public Scenes</div><br>";
+
+                htmlcontent += "<div id='idPubGallery'></div>";
+            }
+
+            htmlcontent += "<br><br>";
+
+            $("#idMainContent").html(htmlcontent);
+
+            if (data.gallery) {
+                SHU.createScenesInputList("idScenes", openSID, search, (scenes) => {
+                    $("#sid").attr("placeholder", "search by term, user or paste a scene-ID...");
+                    /*
+                                $.getJSON( ATON.PATH_RESTAPI+"keywords/", ( kwds )=>{
+                                    for (let k in kwds) $("#sidlist").append("<option>"+k+"</option>");
+                                });
+                    */
+
+                });
+
+                $("#btn-go").click(openSID);
+
+                SHU.createPubScenesGallery("idPubGallery", data.samples);
+            }
+
+            $("#btn-go").hide();
+        };
+
+        window.addEventListener('load', () => {
+            $.getJSON(ATON.PATH_RESTAPI + "landing", onLandingData);
+        });
+
+    </script>
+</head>
+
+<body class="atonDefaultBody">
+<div id='idMainContent'></div>
+<!--
+        <div class='select' style='width:50%;'>
+            <select id='sid'></select><div class='selectArrow'></div>
+        </div>
+-->
+
+<!-- Footer -->
+<div class="atonToolbar atonToolbar-bottom shuFooter">
+    <a href='http://osiris.itabc.cnr.it/aton/' target='_blank'>ATON</a> framework by <a href='https://www.ispc.cnr.it/'
+                                                                                        target='_blank'>CNR ISPC</a>
+</div>
+
+</body>

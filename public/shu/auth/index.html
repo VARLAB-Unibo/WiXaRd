@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+<meta name="mobile-web-ATONServiceMain-capable" content="yes">
+<link rel="icon" href="../appicon.png" sizes="512x512" type="image/png">
+
+<!-- Add iOS meta tags and icons -->
+<meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+<meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+<meta name="apple-mobile-web-ATONServiceMain-title" content="Login">
+<link rel="apple-touch-icon" href="../appicon.png">
+<meta name="description" content="Login">
+<!-- Add meta theme-color -->
+<meta name="theme-color" content="#000000" />
+
+<title>Login</title>
+<link rel="stylesheet" type="text/css" href="../../res/css/aton.css">
+<script type="text/javascript" src="../../vendors/vendors.min.js"></script>
+<script type="text/javascript" src="../../dist/THREE.bundle.js"></script>
+<script type="text/javascript" src="../../dist/ATON.min.js"></script>
+<script type="text/javascript" src="../shu.js"></script>
+
+<script>
+
+let urlParams = new URLSearchParams(window.location.search);
+let targetURL = urlParams.get('url');
+
+// Success
+let onLoginSuccess = (r)=>{
+    console.log(r);
+
+    $("#idLoginBTN").html("Logged in");
+    $("#idLoginBTN").attr("class","atonBTN atonBTN-green");
+
+    if (targetURL === undefined || targetURL === null){
+        location.reload();
+        return;
+    }
+    window.location.href = targetURL;
+};
+
+// Failed
+const onLoginFail = ()=>{
+    $("#error").addClass("error");
+    $("#error").removeClass("hide");
+    //Reset form
+    $("#loginForm")[0].reset();
+};
+
+let renderAuthForm = (data)=>{
+    let htmlcontent = "";
+
+    if (data.username){
+        htmlcontent += "<div class='atonBlockRound' style='width:80%; max-width:600px;'>";
+        
+        if (data.webdav){
+            let base = /*window.location.protocol +*/"http://"+ window.location.hostname;
+            let webdavurl = base+":"+data.webdav;
+
+            htmlcontent += "<h2>Data</h2>";
+            htmlcontent += "You can copy and paste following URL(s) to remotely access your data using WebDav<br><br>";
+
+            if (data.admin){
+                htmlcontent += "<div class='atonBlockRound' style='width:90%'>Apps and Data folders (ALL users):<br>";
+                htmlcontent += "<img class='atonDefIcon' src='"+ATON.PATH_RES+"icons/db.png'><input type='text' value='"+webdavurl+"' readonly style='width:70%'>";
+                //htmlcontent += "<a class='atonBTN' style='width:70%' href='"+webdavurl+"'><img src='"+ATON.PATH_RES+"icons/db.png'>WebDav</a>";
+                htmlcontent += "</div>";
+            }
+            else {
+                let webdavColl   = webdavurl + "/"+data.username+"-collection/";
+                let webdavScenes = webdavurl + "/"+data.username+"-scenes/";
+
+                htmlcontent += "<div class='atonBlockRound' style='width:90%'>Your Collection:<br>";
+                htmlcontent += "<img class='atonDefIcon' src='"+ATON.PATH_RES+"icons/collection.png'><input type='text' value='"+webdavColl+"' readonly style='width:70%'>";
+                //htmlcontent += "<a class='atonBTN' style='width:70%' href='"+webdavColl+"'><img src='"+ATON.PATH_RES+"icons/collection.png'>WebDav</a>";
+                htmlcontent += "<br><br>";
+                htmlcontent += "Your Scenes:<br>";
+                htmlcontent += "<img class='atonDefIcon' src='"+ATON.PATH_RES+"icons/scene.png'><input type='text' value='"+webdavScenes+"' readonly style='width:70%'>";
+                //htmlcontent += "<a class='atonBTN' style='width:70%' href='"+webdavScenes+"'><img src='"+ATON.PATH_RES+"icons/scene.png'>WebDav</a>";
+                htmlcontent += "</div>";
+            }
+
+            htmlcontent += "<br><br>";
+        }
+
+        htmlcontent += "<div class='atonBTN atonBTN-red' style='width:90%' id='idLogoutBTN'>LOGOUT</div>";
+        htmlcontent += "</div>";
+
+        let strTitle = "'"+data.username+"'";
+        if (data.admin) strTitle += " (Admin)";
+        $("#idUserTitle").html(strTitle);
+        $("#idAuth").html(htmlcontent);
+
+        $("#idLogoutBTN").click(()=>{
+            $.getJSON(ATON.PATH_RESTAPI+"logout/",(r)=>{
+                location.reload();
+            });
+        });
+
+    }
+    else {
+
+        htmlcontent += "<div class='hide' id='error'>Wrong user name and/or password</div>";
+        htmlcontent += "<form method='GET' class='atonBlockRound' id='loginForm' style='width:80%; max-width:500px;'>";
+        htmlcontent += "username:<input id='idUsername' type='text' maxlength='15' size='15' ><br>";
+        htmlcontent += "password:<input id='idPassword' type='password' maxlength='15' size='15' ><br>";
+
+        htmlcontent += "<button class='atonBTN atonBTN-green' style='width:90%' id='idLoginBTN'>LOGIN</button>";
+        htmlcontent += "</form>";
+
+        $("#idUserTitle").html("Authentication");
+        $("#idAuth").html(htmlcontent);
+
+	// On form submit, prevent default so page is not reloaded
+	document.querySelector('#loginForm').
+		addEventListener('submit', (e) => {
+		    e.preventDefault();
+        	    let o = {
+                	username: $("#idUsername").val(), 
+	                password: $("#idPassword").val()
+            	     };
+
+            	    ATON.Utils.postJSON(ATON.PATH_RESTAPI+"login/", o, onLoginSuccess, onLoginFail );
+		});
+	
+    }
+};
+
+window.addEventListener('load', ()=>{
+
+    SHU.uiAddMainToolbar("idTopToolbar");
+
+    ATON.Utils.checkAuth((data)=>{
+        renderAuthForm(data);
+    });
+
+    SHU.uiBuildFooter("idFooter");
+});
+
+</script>
+</head>
+
+<body class="atonDefaultBody">
+    <div id="idTopToolbar" class="atonToolbar atonToolbar-top-left scrollableX shuTopToobar"></div>
+
+    <div class='shuMainContainer'>
+        <div class="atonTitle" id='idUserTitle'></div>
+        <div class="atonBlockGroup" id="idAuth"></div>
+    </div>
+
+    <!-- Footer -->
+    <div id= 'idFooter' class="atonToolbar atonToolbar-bottom shuFooter"></div>
+    
+</body>

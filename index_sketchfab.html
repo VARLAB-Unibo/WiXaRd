@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>My first three.js app</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+      }
+      .skfb-widget {
+        height: 100%;
+      }
+
+      #changeTokenButton{
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        background-color: #1AABD9;
+        margin: 0 3% 0 0;
+      }
+
+      #logoutButton{
+        position: fixed;
+        bottom: 20px;
+        right: 25px;
+        /* margin: 0 0 0 2%; */
+
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+  </head>
+  <body>
+    <div class="skfb-widget"></div>
+    <canvas></canvas>
+    
+    <button type="button" id='changeTokenButton' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tokenModal">Modifica API Token</button>
+    <button type="button" id='logoutButton' class="btn btn-danger" onclick="getTokenFromServer()">Logout</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tokenModal" tabindex="-1" aria-labelledby="tokenModalLabel" aria-hidden="true" >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tokenModalLabel">API Token</h5>
+          </div>
+          <div class="modal-body">
+            <label for="APIToken" class="form-label">API Token</label>
+            <input type="password" id="APIToken" class="form-control" aria-describedby="APITokenHelpBlock">
+            <div id="APITokenHelpBlock" class="form-text">
+             Per visualizzare i modelli 3D, effettua il login e scarica l'API Token <span><a href="https://sketchfab.com/settings/password" target="_blank">qui</a></span> 
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary" onclick="saveToken()">Invia</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://apps.sketchfab.com/web-importer/sketchfab-importer.js"></script>
+    <script>
+      const server_uri = 'http://localhost:8080/';
+      const canvas = document.querySelector('canvas');
+      const webglctx = canvas.getContext('webgl');
+      console.log("gl context: ");
+      console.log(webglctx);
+
+      function saveToken(){
+        var token = $("#APIToken").val().trim()
+        // localStorage.setItem('api_token', token);
+        saveTokenOnServer(token)
+        myModal.hide()
+      }
+    
+      function getTokenFromServer() {
+      const options = {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: 'cors',
+      };
+
+      return fetch(server_uri + 'get_token', options)
+        .then(response => {
+          return response.json();
+        })
+        .then(responseData => {
+          console.log("responsedata: " + responseData)
+          return responseData;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          throw error;
+        });
+      }
+
+
+      function saveTokenOnServer(token) {
+        const data = {
+          "token": token
+        };
+
+        const options = {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          mode: 'cors',
+          body: JSON.stringify(data),
+        };
+
+        return fetch(server_uri + 'save_token', options)
+          .then(response => {
+            return response.json();
+          })
+          .then(responseData => {
+            console.log(responseData);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+      
+
+
+      function openViewer(model_path) {
+        // var url = "/3d_viewer";        
+        
+
+        
+        getTokenFromServer().then(res => {
+          
+          const data = {
+          "model_path" : model_path,
+          "token" : res.token
+        }
+
+        console.log(JSON.stringify(data))
+
+        const options = {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        mode: 'cors',
+        body: JSON.stringify(data)
+          // JSON.stringify({ path: model_path,
+          //       context: ctx
+          // })
+        };
+
+        return fetch(server_uri + '3d_viewer', options)
+          .then(response => {
+            return response.json();
+          })
+          .then(responseData => {
+            console.log(responseData)
+            return responseData;
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            throw error;
+          });
+        })
+
+        // const options = {
+        //   method: 'POST',
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        //   mode: 'cors',
+        //   body: JSON.stringify(data)
+        //     // JSON.stringify({ path: model_path,
+        //     //       context: ctx
+        //     // })
+        // };
+
+        // return fetch(server_uri + '3d_viewer', options)
+        //   .then(response => {
+        //     return response.json();
+        //   })
+        //   .then(responseData => {
+        //     console.log(responseData)
+        //     return responseData;
+        //   })
+        //   .catch(error => {
+        //     console.error('Error:', error);
+        //     throw error;
+        //   });
+      }
+
+    //  function getToken(){
+    //     const modelDataUrl = 'https://sketchfab.com/oauth2/token/';
+
+    //     const data = {
+    //       "grant-type": "password",
+    //       "username": "varlabunibo@gmail.com",
+    //       "password": "Varlab2022"
+    //     }
+
+    //     const options = {
+    //         method: 'POST',
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           Authorization: "Basic dmFybGFidW5pYm86VmFybGFiMjAyMg==",
+    //         },
+    //         mode: 'cors',
+    //         body: JSON.stringify(data), 
+
+    //     };
+    //     const response = fetch(modelDataUrl, options);
+    //     const metadata = JSON.parse(response)
+
+    //   }
+
+      var el = document.querySelector(".skfb-widget");
+      
+
+      var skfbWidget = new SketchfabImporter(el, {
+        onModelSelected: function (result) {
+          // getToken()
+          // console.log(result.model.uri.split("/")[5]);
+          // localStorage.setItem('download_uri', result.model.uri);
+          // document.location.href = "/index_threeJS.html";
+          openViewer(result.model.uri.split("/")[5]);
+        },
+      });
+
+    
+      var myModal = new bootstrap.Modal(document.getElementById('tokenModal'), {
+        keyboard: false,
+        backdrop: 'static'
+      })
+  
+      // if(!localStorage.getItem('api_token')) myModal.show()
+      getTokenFromServer().then(res =>{if(!res.token) myModal.show()})
+                          .catch(err => {console.log(err);})
+
+      
+      // skfbWidget.rpc.src.onchange(el => {
+      //   console.log('something is changing')
+      //   console.log(el)
+      // })
+    
+    
+    </script>
+  </body>
+</html>

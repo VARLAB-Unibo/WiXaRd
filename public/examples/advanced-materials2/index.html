@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="/res/aton-logo.png" sizes="512x512" type="image/png">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="ATON Sample">
+    <link rel="apple-touch-icon" href="/res/aton-logo.png">
+    <meta name="description" content="ATON Sample">
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000" />
+
+    <title>ATON Sample</title>
+    <link rel="stylesheet" type="text/css" href="/res/css/aton.css">
+
+	<script type="text/javascript" src="/vendors/vendors.min.js"></script>
+
+    <script type="text/javascript" src="/dist/THREE.bundle.js"></script>
+    <script type="text/javascript" src="/dist/ATON.min.js"></script>
+
+<script>
+window.addEventListener( 'load', ()=>{
+    let locSkyphos = new THREE.Vector3(0.1, 4.5, 1.6);
+    let locCube    = new THREE.Vector3(0.1, 1.0, 3.0);
+
+    // We load GLTF from Khronos samples
+    let modelurl = "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DragonAttenuation/glTF/DragonAttenuation.gltf";
+
+    // Realize the base front-end
+    ATON.FE.realize();
+
+    // Create some HTML UI
+	ATON.FE.uiAddButtonHome("idTopToolbar");
+    ATON.FE.uiAddButtonVR("idTopToolbar"); // VR button will show up only on secure connections
+
+    ATON.SUI.setSelectorRadius(0.01);
+
+    // Our events
+	ATON.FE.addBasicLoaderEvents();
+
+	ATON.on("KeyPress", function(k){
+        if (k === 'u'){
+            ATON.updateLightProbes();
+            console.log("LPs updated")
+        }
+    });
+
+    // Sample scene
+    ATON.addLightProbe( new ATON.LightProbe(64, 0.1).setPosition(0.1, 0.4, 0.0) );
+    //ATON.addLightProbe( new ATON.LightProbe(64, 0.1).setPosition(locCube) );
+
+	// Loads main panorama (equirectangular)
+	ATON.setMainPanorama("samples/pano/defsky-grass.jpg");
+
+	ATON.setMainLightDirection( new THREE.Vector3(-0.1, -1, -1) );
+
+    ATON.createSceneNode("main")
+        .load(modelurl)
+        .attachToRoot();
+
+    ATON.createSceneNode("skyphos")
+        .load("samples/models/skyphos/skyphos.gltf")
+        .setPosition(locSkyphos)
+        .setScale(5.0)
+        .attachToRoot();
+
+/*
+    ATON.createSceneNode("cube")
+        .load("samples/models/atoncube.glb")
+        .setPosition(locCube)
+        //.setScale(2.0)
+        .attachToRoot();
+*/
+    // Enable real-time shadows
+    ATON.toggleShadows(true);
+
+    // FX
+    ATON.FX.togglePass(ATON.FX.PASS_BLOOM, true);
+    ATON.FX.setBloomThreshold(0.8);
+    ATON.FX.setBloomStrength(0.3);
+
+    //ATON.FX.togglePass(ATON.FX.PASS_DOF, true);
+});
+
+</script>
+</head>
+
+<body oncontextmenu="return false;">
+    <!-- Top Toolbar -->
+    <div id="idTopToolbar" class="atonToolbar atonToolbar-top-left"></div>
+
+    <!-- Bottom Toolbar -->
+    <div id="idBottomToolbar" class="atonToolbar atonToolbar-bottom"></div>
+
+	<!-- Side Panel -->
+	<div id="idPanel" class="atonSidePanelContainer">
+        <div class='atonSidePanelContent'>
+        <div class='descriptionText'>
+            This sample starts from <a href="../advanced-materials1/">this one</a>, adding more stuff.<br><br>
+            In this case we are loading a remote 3D asset (Dragon), mixed with a local asset ("Skyphos") from the local collection. You can see the refraction effects through the dragon.<br><br>
+            
+            We also enable a few post-fx like <b>bloom</b>, in addition to <b>light-probe</b> and <b>real-time shadows</b>.
+        </div>
+        </div>
+    </div>
+
+    <!-- Main Popup -->
+    <div id="idPopup" class="atonPopupContainer" style="display:none;"></div>
+
+    <!-- Loader -->
+    <div id="idLoader" class="atonCenterLoader" style="display:none;"></div>
+
+    <!-- Powered by -->
+    <div id='idPoweredBy' class="poweredBy" >
+        Powered by <a href="http://osiris.itabc.cnr.it/aton/" target="_blank">ATON</a>
+    </div>
+</body>

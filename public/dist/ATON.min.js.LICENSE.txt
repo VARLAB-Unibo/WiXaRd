@@ -1,0 +1,33 @@
+/*!
+    @preserve
+
+ 	ATON
+
+ 	@author Bruno Fanini
+	VHLab, CNR ISPC
+
+==================================================================================*/
+
+/*!
+ * Connect - session - Cookie
+ * Copyright(c) 2010 Sencha Inc.
+ * Copyright(c) 2011 TJ Holowaychuk
+ * MIT Licensed
+ */
+
+/*!
+ * Prototype.
+ */
+
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+/*!
+ * depd
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */

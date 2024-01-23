@@ -1,0 +1,18 @@
+{
+    "status": "complete",
+
+    "scenegraph": {
+        "nodes": {
+            "main": {
+                "urls": [
+                    "samples/models/throne/throne.gltf"
+                ]
+            }
+        },
+        "edges": {
+            ".": [
+                "main"
+            ]
+        }
+    }
+}

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="appicon.png" sizes="512x512" type="image/png">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="Hathor">
+    <link rel="apple-touch-icon" href="appicon.png">
+
+    <meta name="description" content="ATON official front-end">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+
+    <!-- OpenGraph tags -->
+    <meta property="og:title" content="Hathor"/>
+    <meta property="og:description" content="ATON official front-end"/>
+    <meta property="og:image" content="appicon.png"/>
+    <meta property="og:image:secure_url" content="appicon.png"/>
+    <meta property="og:image:type" content="image/png"/>
+    <meta property="og:image:width" content="200"/>
+    <meta property="og:image:height" content="200"/>
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="app.webmanifest">
+
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000"/>
+
+    <title>Hathor</title>
+    <link rel="stylesheet" type="text/css" href="../res/css/aton.css">
+    <link rel="stylesheet" href="vendors/sceditor/minified/themes/square.min.css">
+
+    <!-- Vendors -->
+    <script type="text/javascript" src="../vendors/vendors.min.js"></script>
+    <script src="vendors/sceditor/minified/jquery.sceditor.xhtml.min.js"></script>
+    <script type="text/javascript" src="../dist/THREE.bundle.js"></script>
+
+    <!--    <script type="module" src="../src/ATON.js"></script>-->
+
+    <script type="text/javascript" src="../dist/ATON.min.js"></script>
+    <script type="text/javascript" src="hathor.js"></script>
+<!--    <script id="lzutf8" src="https://cdn.jsdelivr.net/npm/lzutf8/build/production/lzutf8.min.js"></script>-->
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="hathor.ui.js"></script>
+    <script type="text/javascript" src="hathor.tools.js"></script>
+    <script type="text/javascript" src="hathor.sui.js"></script>
+    <script type="text/javascript" src="hathor.events.js"></script>
+    <script type="text/javascript" src="hathor.pdf.js"></script>
+    <script type="text/javascript" src="hathor.sketchfab.js"></script>
+
+    <script>
+        // We init Hathor onload
+        window.addEventListener('load', () => {
+            // TODO da capire ogni parametro cosa fa
+            HATHOR.init(
+                sceneId = "samples/varlab",
+                // sceneId = "samples/basic",
+                photon = true,
+                edit = true,
+                prof = true,
+                RLOG = false, // Con questo poss vedere il log del client sul terminale del computer
+                UIP = false,
+                TB = false, // "back,nav,vr", // Con questo posso inserire una custom list di bottoni, ad esempio scrivendo "back, nav, vr" mi mette questi 3 bottoni
+                back = false,
+                bvh = false,
+                tsb = false,
+                btse = false,
+                autonav = false
+            )
+        });
+    </script>
+</head>
+
+<body oncontextmenu="return false;">
+
+
+<!--<div id="idLogContainer" class="atonVRCsidePanel" style="display: none;">-->
+<!--    <div id="idLog" class="atonVRCchat"></div>-->
+<!--</div>-->
+
+
+<!--<canvas id='View3D'></canvas>-->
+
+<!-- Top Toolbar -->
+<div id="idTopToolbar" class="hideWhenOpeningPopup atonToolbar atonToolbar-top-left scrollableX"></div>
+<!--<div id="idTopRToolbar" class="hideWhenOpeningPopup atonToolbar atonToolbar-top-right scrollableX"></div>-->
+
+<!-- Bottom Toolbar -->
+<div id="idBottomToolbar" class="hideWhenOpeningPopup atonToolbar atonToolbar-bottom scrollableX"></div>
+<div id="idBottomRToolbar" class="hideWhenOpeningPopup atonToolbar atonToolbar-bottom-right"></div>
+
+<!-- Semantic Side Panel -->
+<div id="idSemPanelBG" class="atonSidePanelBG" style="display:none"></div>
+<div id="idSemPanel" class="atonSidePanelContainer" style="display:none"></div>
+
+<!-- Main Popup -->
+<div id="idPopup" class="atonPopupContainer" style="display:none;"></div>
+
+<!-- Loader -->
+<div id="idLoader" class="atonCenterLoader" style="display:none;"></div>
+<div id="idBGcover" class="atonBGcover" style="display:none;"></div>
+
+<div id="sketchfab" style="z-index: 9999; position: absolute; bottom: 0.1em; margin: 0 0 1em 1em;">
+
+</div>
+</body>
+

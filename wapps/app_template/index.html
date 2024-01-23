@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="appicon.png" sizes="512x512" type="image/png">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="__APPTITLE__">
+    <link rel="apple-touch-icon" href="appicon.png">
+
+    <!-- OpenGraph tags -->
+    <meta property="og:title" content="__APPTITLE__" />
+    <meta property="og:description" content="__APPDESC__" />
+    <meta property="og:image" content="appicon.png" />
+	<meta property="og:image:secure_url" content="appicon.png" />
+	<meta property="og:image:type" content="image/png" />
+	<meta property="og:image:width" content="200" />
+	<meta property="og:image:height" content="200" />
+
+	<!-- PWA manifest -->
+	<link rel="manifest" href="ATONServiceMain.webmanifest">
+
+	<!-- Web-ATONServiceMain ID -->
+	<meta name="aton:appid" content="app_template">
+
+	<meta name="title" content="__APPTITLE__">
+	<meta name="description" content="__APPDESC__">
+
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000" />
+
+    <title>__APPTITLE__</title>
+    <link rel="stylesheet" type="text/css" href="/res/css/aton.css">
+
+    <!-- Vendors -->
+    <script type="text/javascript" src="/vendors/vendors.min.js"></script>
+    <script type="text/javascript" src="/dist/THREE.bundle.js"></script>
+    <script type="text/javascript" src="/dist/ATON.min.js"></script>
+
+	<!-- Main js entry -->
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body oncontextmenu="return false;">
+    <!-- Top Toolbar -->
+    <div id="idTopToolbar" class="atonToolbar atonToolbar-top-left"></div>
+
+	<!-- Bottom Toolbar -->
+	<div id="idBottomToolbar" class="atonToolbar atonToolbar-bottom"></div>
+
+    <!-- Main Popup -->
+    <div id="idPopup" class="atonPopupContainer" style="display:none;"></div>
+
+    <!-- Loader -->
+    <div id="idLoader" class="atonCenterLoader" style="display:none;"></div>
+
+    <!-- Powered by -->
+    <div id='idPoweredBy' class="atonToolbar atonToolbar-bottom poweredBy" >
+        Powered by <a href="https://osiris.itabc.cnr.it/aton/" target="_blank">ATON</a>
+    </div>
+</body>

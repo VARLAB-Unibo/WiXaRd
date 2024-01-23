@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="/res/aton-logo.png" sizes="512x512" type="image/png">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="ATON Sample">
+    <link rel="apple-touch-icon" href="/res/aton-logo.png">
+    <meta name="description" content="ATON Sample">
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000" />
+
+    <title>ATON Sample</title>
+    <link rel="stylesheet" type="text/css" href="/res/css/aton.css">
+
+	<script type="text/javascript" src="/vendors/vendors.min.js"></script>
+
+    <script type="text/javascript" src="/dist/THREE.bundle.js"></script>
+    <script type="module" src="/dist/ATON.min.js"></script>
+
+<script>
+// This is our custom icon
+let iconIndicator = undefined;
+
+// We create a variable to handle current period ('a' = past, 'm' = present)
+// Note: we can extend also to multiple periods/layers
+let period = "a";
+
+let switchPeriod = ()=>{
+    // Filp between past and present
+    if (period === "a") period = "m";
+    else period = "a";
+
+    // Update base layer of current XPF
+    ATON.XPFNetwork.updateCurrentXPFbaseLayer();
+};
+
+
+let setupEvents = ()=>{
+    // Change period on key 's'
+    ATON.on("KeyPress", k =>{
+        if (k==='s') switchPeriod();
+    });
+
+    // We subscribe to next XPF detected
+    ATON.on("NextXPF", i =>{
+        // No next XPF detected, hide the indicator 
+        if (i === undefined){
+            iconIndicator.visible = false;
+            return;
+        }
+        // Next XPF detected, show indicator and update its location
+        let xpf = ATON.XPFNetwork.getXPFbyIndex(i);
+
+        iconIndicator.visible = true;
+        iconIndicator.position.copy( xpf.getLocation() );
+    });
+
+    // When we request a locomotion node transition, hide indicator
+    ATON.on("LocomotionNodeRequested", locnode => {
+        iconIndicator.visible = false;
+    });
+    /*
+    ATON.on("POVTransitionCompleted", ()=>{
+        iconIndicator.visible = false;
+    })
+    */
+
+    ATON.FE.uiSetButtonHandler("idSUIswitch", ()=>{
+        switchPeriod();
+    });
+};
+
+// Routine to create our custom icon
+let realizeIndicator = ()=>{
+
+    iconIndicator = new THREE.Sprite(
+        new THREE.SpriteMaterial({ 
+            map: new THREE.TextureLoader().load( ATON.PATH_RES+"sui-walk.png" ), 
+            transparent: true,
+            opacity: 1.0,
+            //depthWrite: false, 
+            depthTest: false
+        })
+    );
+
+    iconIndicator.scale.set(0.5,0.5,0.5);
+
+    ATON.getRootUI().add( iconIndicator );
+};
+
+window.addEventListener( 'load', ()=>{
+
+    // Realize the base front-end
+    ATON.FE.realize();
+
+    // Create some HTML UI
+    ATON.FE.uiAddButtonFullScreen("idTopToolbar");
+    ATON.FE.uiAddButtonVR("idTopToolbar");
+    ATON.FE.uiAddButtonDeviceOrientation("idTopToolbar");
+
+    // Add basic event handlers
+    ATON.FE.addBasicLoaderEvents();
+
+    // Set FirstPersone mode
+    ATON.Nav.setFirstPersonControl();
+    ATON.Nav.setFOV(70.0);
+
+    // We use an offset for each panorama (XPF)
+    let rotOffset = new THREE.Vector3(0.0, -(Math.PI * 0.5), 0.0);
+
+    // We add a few XPFs to our network
+    ATON.XPFNetwork.add(
+        new ATON.XPF()
+            .setBaseLayer("samples/pano/montebelluna/05")
+            .setRotation(rotOffset)
+            .setLocation(341.41, 116.658, -116.65)
+    );
+
+    ATON.XPFNetwork.add( 
+        new ATON.XPF()
+            .setBaseLayer("samples/pano/montebelluna/06")
+            .setRotation(rotOffset)
+            .setLocation(341.23, 116.658, -120.51)
+    );
+
+    ATON.XPFNetwork.add( 
+        new ATON.XPF()
+            .setBaseLayer("samples/pano/montebelluna/07")
+            .setRotation(rotOffset)
+            .setLocation(343.83, 116.658, -120.49)
+    );
+
+    // We set our path modifier
+    // In this case, depending on period variable we postfix a different pattern
+    ATON.XPFNetwork.setPathModifier((path)=>{
+        return path + period + ".jpg";
+    });
+
+    // Let's set the first XPF as home
+    ATON.XPFNetwork.setHomeXPF(0);
+    ATON.XPFNetwork.requestTransitionByIndex(0, 0.0);
+
+    // We realize our custom Spatial UI indicator
+    realizeIndicator();
+
+    // Setup our events
+    setupEvents();
+});
+
+</script>
+</head>
+
+<body oncontextmenu="return false;">
+    <!-- Top Toolbar -->
+    <div id="idTopToolbar" class="atonToolbar atonToolbar-top-left"></div>
+
+    <!-- Bottom Toolbar -->
+    <div id="idBottomToolbar" class="atonToolbar atonToolbar-bottom">
+        <div id='idSUIswitch' class='atonBTN atonBTN-text'>Switch</div>
+    </div>
+
+	<!-- Side Panel -->
+	<div id="idPanel" class="atonSidePanelContainer">
+        <div class='atonSidePanelContent'>
+        <div class='descriptionText'>
+            In this sample we showcase <b>XPF (eXtended Panoramic Frame)</b> customization.<br><br>
+            
+            This is similar to the <a href="../xpf-basic/">basic XPF example</a>. In this case we customize the icon used for the locations of locomotion nodes and its visibility (only next locomotion node in sight becomes visible).<br><br>
+            
+            We also setup a custom path modifier to load two different layers (present and past) by using different postfixes, by pressing <span class="atonKey">'S'</span> key or using bottom switch.<br><br>
+
+            360 panoramas created by E. Demetrescu (CNR ISPC)
+        </div>
+        </div>
+    </div>
+
+    <!-- Main Popup -->
+    <div id="idPopup" class="atonPopupContainer" style="display:none;"></div>
+
+    <!-- Loader -->
+    <div id="idLoader" class="atonCenterLoader" style="display:none;"></div>
+
+    <!-- Powered by -->
+    <div id='idPoweredBy' class="poweredBy" >
+        Powered by <a href="http://osiris.itabc.cnr.it/aton/" target="_blank">ATON</a>
+    </div>
+</body>

@@ -1,0 +1,65 @@
+[
+    {
+        "username": "ra",
+        "password": "ra2020",
+        "admin": true,
+        "sketchfab_token": "1f5fc99a914a42d294cdfd41d343cba1",
+        "items": [
+            {
+                "name": "sketchfab_point",
+                "type": "sketchfab",
+                "url": "https://sketchfab.com/3d-models/sketchfab-point0-centered-ec940bc5ef624913bf17345ce4d89803",
+                "tag": "importer",
+                "assetId": "ec940bc5ef624913bf17345ce4d89803",
+                "thumbnail": "https://media.sketchfab.com/models/ec940bc5ef624913bf17345ce4d89803/thumbnails/88748ca771544388ac12118cf301d120/2a9f372cafd94a8395a82cb8d3542fc5.jpeg"
+            },
+            {
+                "name": "sofa",
+                "type": "sketchfab",
+                "url": "https://sketchfab.com/3d-models/victorian-style-sofa-919854763a7640dc8c72afbfccd3e3ee",
+                "tag": "importer",
+                "assetId": "919854763a7640dc8c72afbfccd3e3ee",
+                "thumbnail": "https://media.sketchfab.com/models/919854763a7640dc8c72afbfccd3e3ee/thumbnails/32a16b21bf9844468022fbddd02ea96b/daf900e795e946feacff4a0b7bffb49c.jpeg"
+            },
+            {
+                "name": "vespakart",
+                "type": "sketchfab",
+                "url": "https://sketchfab.com/3d-models/vespa-kart-4e56a4acd32d4d27bd61611c5d475892",
+                "tag": "sceneobj",
+                "assetId": "4e56a4acd32d4d27bd61611c5d475892",
+                "thumbnail": "https://media.sketchfab.com/models/4e56a4acd32d4d27bd61611c5d475892/thumbnails/2609f23be991402babaa02cccc0b831d/c1f3fc8a98c245c99744be4b0e58e615.jpeg"
+            },
+            {
+                "name": "mclaren",
+                "type": "sketchfab",
+                "url": "https://sketchfab.com/3d-models/mclaren-f1-1993-ruby-dc89d689490340cb9aff2189cd8017a5",
+                "tag": "sceneobj",
+                "assetId": "dc89d689490340cb9aff2189cd8017a5",
+                "thumbnail": "https://media.sketchfab.com/models/dc89d689490340cb9aff2189cd8017a5/thumbnails/fa6c5ce533a34ff0a4d88dc6765ca724/54c28ea2e4c04b068653ad736a0044d1.jpeg"
+            },
+            {
+                "name": "Dumbo",
+                "type": "sketchfab",
+                "url": "https://sketchfab.com/models/d0e4db0c87ce4245a34d71dc4ad4b832/embed",
+                "tag": "sceneobj",
+                "assetId": "d0e4db0c87ce4245a34d71dc4ad4b832",
+                "thumbnail": "https://media.sketchfab.com/models/d0e4db0c87ce4245a34d71dc4ad4b832/thumbnails/0ea8fbe13d53493cab9c5ac90cf3fb95/2599e6dc425c408ab02b93cd1fd95e86.jpeg"
+            }
+        ]
+    },
+    {
+        "username": "bastet",
+        "password": "bas2020",
+        "sketchfab_token": ""
+    },
+    {
+        "username": "alien",
+        "password": "aliens",
+        "sketchfab_token": "67753422ee7b40ad83b3105ed080a86f"
+    },
+    {
+        "username": "ciao",
+        "password": "ciao2",
+        "sketchfab_token": ""
+    }
+]

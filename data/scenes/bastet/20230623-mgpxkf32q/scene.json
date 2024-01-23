@@ -1,0 +1,33 @@
+{
+    "status": "complete",
+    "environment": {
+        "mainpano": {
+            "url": "samples/pano/hemi-bottom-cyan.jpg"
+        },
+        "lightprobes": {
+            "auto": true
+        }
+    },
+    "scenegraph": {
+        "nodes": {
+            "main": {
+                "urls": [
+                    "samples/models/atoncube.glb",
+                    "samples/models/basic/aton-ground.gltf",
+                    "samples/models/basic/ground.gltf"
+                ]
+            },
+            "reconstruction": {
+                "urls": [
+                    "samples/models/openbox/openbox-rgb.gltf"
+                ]
+            }
+        },
+        "edges": {
+            ".": [
+                "main",
+                "reconstruction"
+            ]
+        }
+    }
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="/res/aton-logo.png" sizes="512x512" type="image/png">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="ATON Sample">
+    <link rel="apple-touch-icon" href="/res/aton-logo.png">
+    <meta name="description" content="ATON Sample">
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000" />
+
+    <title>ATON FrontEnd</title>
+    <link rel="stylesheet" type="text/css" href="/res/css/aton.css">
+
+	<script type="text/javascript" src="/vendors/vendors.min.js"></script>
+
+    <script type="text/javascript" src="/dist/THREE.bundle.js"></script>
+    <script type="text/javascript" src="/dist/ATON.min.js"></script>
+
+<script>
+window.addEventListener( 'load', ()=>{
+
+    // Realize the base front-end
+    ATON.FE.realize();
+
+    // Create some HTML UI
+    ATON.FE.uiAddButtonVR("idTopToolbar"); // VR button will show up only on secure connections (required)
+
+    // Our events
+	ATON.FE.addBasicLoaderEvents();
+
+
+    // We create our group node
+    ATON.createSceneNode("myGroup").attachToRoot();
+
+    ATON.createSceneNode("ground")                      // create our scene node with ID 'ground'
+        .load("samples/models/basic/ground.gltf")       // load a sample GLTF from our local collection
+        .setScale(10.0)                                 // scale "ground" node 10x
+        .attachTo("myGroup");                           // attach the node to our group
+
+	
+    ATON.createSceneNode("skyphos")
+        .load("samples/models/skyphos/skyphos.gltf")
+        .setScale(4.0)
+        .setPosition(1.5,4.1,1.0)
+        .attachTo("myGroup");
+
+    ATON.createSceneNode("chrysippus")
+        .load("samples/models/chrysippus/50k_delighted.gltf")
+        .setScale(10.0)
+        .setPosition(10,1,1.0)
+        .attachTo("myGroup");
+
+	// Loads main panorama (equirectangular)
+	ATON.setMainPanorama("samples/pano/defsky-grass.jpg");
+
+});
+
+</script>
+</head>
+
+<body oncontextmenu="return false;">
+    <!-- Top Toolbar -->
+    <div id="idTopToolbar" class="atonToolbar atonToolbar-top-left"></div>
+
+    <!-- Bottom Toolbar -->
+    <div id="idBottomToolbar" class="atonToolbar atonToolbar-bottom">
+        <div class='atonBTN' onclick="ATON.getSceneNode('myGroup').toggle()"><img src="/res/icons/layers.png">MAIN Group</div>
+        <div class='atonBTN' onclick="ATON.getSceneNode('ground').toggle()"><img src="/res/icons/collection-item.png">Ground</div>
+        <div class='atonBTN' onclick="ATON.getSceneNode('chrysippus').toggle()"><img src="/res/icons/collection-item.png">Chrysippus</div>
+        <div class='atonBTN' onclick="ATON.getSceneNode('skyphos').toggle()"><img src="/res/icons/collection-item.png">Skyphos</div>
+    </div>
+
+	<!-- Side Panel -->
+	<div id="idPanel" class="atonSidePanelContainer">
+        <div class='atonSidePanelContent'>
+        <div class='descriptionText'>
+            In this sample we test layers switching and scene-graph.<br><br>
+            A basic 3D scene is arranged by creating different ATON nodes ("ground","chrysippus" and "skyphos") loading different resources (GLTF models). We also create a main parent node called "myGroup".
+            <br><br>Each node can be individually toggled via <code>ATON.getSceneNode('node-id').toggle()</code>. Try switching on/off different nodes using buttons in the bottom toolbar.
+            <br><br>
+            These routines are useful for multi-temporal 3D scenes or architectrual visualization to interactively switch on/off reconstructions, hypotheses or portions of buildings or objects.
+        </div>
+        </div>
+    </div>
+
+    <!-- Main Popup -->
+    <div id="idPopup" class="atonPopupContainer" style="display:none;"></div>
+
+    <!-- Loader -->
+    <div id="idLoader" class="atonCenterLoader" style="display:none;"></div>
+
+    <!-- Powered by -->
+    <div id='idPoweredBy' class="poweredBy" >
+        Powered by <a href="http://osiris.itabc.cnr.it/aton/" target="_blank">ATON</a>
+    </div>
+</body>

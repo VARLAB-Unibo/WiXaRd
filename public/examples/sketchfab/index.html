@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="/res/aton-logo.png" sizes="512x512" type="image/png">
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="ATON Sample">
+    <link rel="apple-touch-icon" href="/res/aton-logo.png">
+    <meta name="description" content="ATON Sample">
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000"/>
+
+    <title>ATON Sample</title>
+    <link rel="stylesheet" type="text/css" href="/res/css/aton.css">
+
+    <script type="text/javascript" src="/vendors/vendors.min.js"></script>
+
+    <script type="text/javascript" src="/dist/THREE.bundle.js"></script>
+<!--    <script type="module" src="/src/ATON.js"></script>-->
+    <script type="text/javascript" src="/dist/ATON.min.js"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+
+            // A sample SketchFab asset-ID
+            let skfAssetID = "ca77ae1351ca4b1c9a7d403e09e1c4af";
+            // let skfAssetID = "9dd099d283e54f99b7cbd40b531b1a29";
+
+            // Realize the base front-end
+            ATON.FE.realize();
+
+            // Custom asset ID
+            let m = ATON.FE.urlParams.get('m');
+            if (m) {
+                skfAssetID = m;
+            }
+
+            // Create some HTML UI
+            ATON.FE.uiAddButtonHome("idTopToolbar");
+            ATON.FE.uiAddButtonFirstPerson("idTopToolbar");       // First-person navigation mode
+            ATON.FE.uiAddButtonVR("idTopToolbar"); // VR button will show up only on secure connections (required)
+
+            // Add basic event handlers
+            ATON.FE.addBasicLoaderEvents();
+
+            // Sample setup
+            ATON.setAutoLP(true); // Auto LP
+            ATON.SUI.setSelectorRadius(0.01);
+
+            // Enable direct light + real-time shadows
+            ATON.setMainLightDirection(new THREE.Vector3(-0.1, -1, -1));
+            ATON.toggleShadows(true);
+
+            // Loads main panorama (equirectangular)
+            ATON.setMainPanorama("samples/pano/defsky-grass.jpg");
+
+            // SketchFab token here (otherwise a popup will request it)
+            ATON.setAPIToken("sketchfab","32c118a0d7f14e58a9a3f26557ab7870");
+
+            // We create an ATON node and load a SketchFab asset!
+            ATON.createSceneNode("sample-skf")
+                .loadSketchfabAsset(skfAssetID)
+                .attachToRoot();
+        });
+
+    </script>
+</head>
+
+<body oncontextmenu="return false;">
+<!-- Top Toolbar -->
+<div id="idTopToolbar" class="atonToolbar atonToolbar-top-left"></div>
+
+<!-- Bottom Toolbar -->
+<div id="idBottomToolbar" class="atonToolbar atonToolbar-bottom"></div>
+
+<!-- Side Panel -->
+<div id="idPanel" class="atonSidePanelContainer">
+    <div class='atonSidePanelContent'>
+        <div class='descriptionText'>
+            <img src='./cover.jpg'><br>
+
+            In this sample we load a CC0 <a
+                href="https://sketchfab.com/3d-models/owl-zun-wine-vessel-13th-12th-century-bce-ca77ae1351ca4b1c9a7d403e09e1c4af"><b>SketchFab</b>
+            animated asset</a> directly into an ATON node.
+            <br><br>
+
+            If not provided, a popup will ask you to insert a token. You can find your API token in your <a
+                href="https://sketchfab.com/settings/password">API settings</a><br><br>
+
+            We also setup light probing and a direct light with dynamic shadows. You can indeed mix together these
+            models with assets from local ATON collections and much more.
+        </div>
+    </div>
+</div>
+
+<!-- Main Popup -->
+<div id="idPopup" class="atonPopupContainer" style="display:none;"></div>
+
+<!-- Loader -->
+<div id="idLoader" class="atonCenterLoader" style="display:none;"></div>
+
+<!-- Powered by -->
+<div id='idPoweredBy' class="poweredBy">
+    Powered by <a href="http://osiris.itabc.cnr.it/aton/" target="_blank">ATON</a>
+</div>
+</body>

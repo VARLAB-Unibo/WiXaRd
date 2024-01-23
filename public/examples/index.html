@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+<meta name="mobile-web-ATONServiceMain-capable" content="yes">
+<link rel="icon" href="/res/aton-logo.png" sizes="512x512" type="image/png">
+
+<!-- Add iOS meta tags and icons -->
+<meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+<meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+<meta name="apple-mobile-web-ATONServiceMain-title" content="ATON Examples">
+<link rel="apple-touch-icon" href="/res/aton-logo.png">
+<meta name="description" content="ATON Examples">
+
+<!-- Add meta theme-color -->
+<meta name="theme-color" content="#000000" />
+
+<title>ATON Examples</title>
+<link rel="stylesheet" type="text/css" href="/res/css/aton.css">
+<script type="text/javascript" src="/vendors/vendors.min.js"></script>
+
+<script>
+let urlParams = new URLSearchParams(window.location.search);
+let paramKeyword = urlParams.get('k');
+
+let getBaseFolder = ( filepath )=>{
+    var index = filepath.lastIndexOf( '/' );
+    if ( index !== -1 ) return filepath.substring( 0, index + 1 );
+    
+    return '';
+};
+
+let createKeywordEl = (kw)=>{
+    let html = "<div class='atonKeyword atonKeywordActivable' onclick='searchTerm(\""+kw+"\")'>"+kw+"</div>";
+    return html;
+};
+
+let createExampleBlock = (dir, title, kwords)=>{
+    let coversizex = 250;
+    let coversizey = 400;
+
+    let kwds = kwords.split(" ");
+    let urlCover = dir+"/cover.jpg";
+
+    let htmlcontent = "";
+
+    htmlcontent += "<div id='sid-"+dir+"' class='atonGalleryItem' data-search-term='"+kwords+"' style='background-color:rgba(255,255,255, 0.0); margin:8px' >";
+
+    // gallery item bg
+    htmlcontent += "<div class='atonBlurBG' style='width:"+coversizex+"px; height:"+coversizey+"px; background-image: url(\""+urlCover+"\")'></div>";
+
+    // gallery item content
+    htmlcontent += "<div style='width:"+coversizex+"px; height:"+coversizey+"px; position:absolute; top:0; left:0'>";
+    htmlcontent += "<div class='atonBlockSubTitle'>"+title+"</div><br>";
+
+    htmlcontent += "<a class='atonCover' href='"+dir+"/'>";
+    htmlcontent += "<img src='"+urlCover+"' style='width:200px; height:auto'>";
+    htmlcontent += "</a><br><br>";
+
+    // keywords
+    htmlcontent += "<div>";
+    for (let k in kwds) htmlcontent += createKeywordEl(kwds[k]); //"<div class='atonKeyword atonKeywordActivable' onclick='searchTerm(\""+kwds[k]+"\")'>"+kwds[k]+"</div>";
+    htmlcontent += "</div>";
+
+    htmlcontent += "</div></div>";
+
+    return htmlcontent
+};
+
+let showAllBlocks = ()=>{
+    $('.atonGalleryItem').each(function(){
+        $(this).show();
+    });
+};
+
+let searchTerm = (searchTerm)=>{
+    let count = 0;
+
+    if (searchTerm === undefined) searchTerm = $('#idSearch').val().toLowerCase();
+    else $('#idSearch').val(String(searchTerm));
+
+    searchTerm = searchTerm.split(" ")[0];
+
+    //if (searchTerm === undefined) return;
+
+    if (searchTerm.length < 2){
+        showAllBlocks();
+        return count;
+    }
+    //console.log(searchTerm);
+
+    $('.atonGalleryItem').each(function(){
+        if ($(this).filter('[data-search-term *= ' + searchTerm + ']').length > 0 || searchTerm.length < 1){
+            $(this).show();
+            count++;
+        }
+        else $(this).hide();
+    });
+
+    return count;
+};
+
+window.addEventListener( 'load', ()=>{
+    let htmlcontent = "";
+    
+    let htdescr = "<img src='/res/icons/samples.png' style='float:left'>This is a list of interactive examples built on top of ATON framework for developers. Each example has source-code commented so you can get started very quickly. You can search (top left) using keywords like "+createKeywordEl("basic")+", "+createKeywordEl("navigation")+", "+createKeywordEl("pbr")+", "+createKeywordEl("collaborative")+", etc... There is also an example of <a href='minimal/'>minimal setup</a> (the minimal html required to present an interactive 3D scene or model).";
+
+    $("#idDescr").html(htdescr);
+
+    // Base
+    htmlcontent += createExampleBlock("minimal", "Minimal", "basic minimal object");
+    htmlcontent += createExampleBlock("basic", "Basic", "basic");
+
+    // Scenes
+    htmlcontent += createExampleBlock("scene-basic", "Basic Scene", "basic scene");
+    htmlcontent += createExampleBlock("animation1", "Animated models", "basic object animation");
+
+    // Layers
+    htmlcontent += createExampleBlock("layers-basic", "Scene Layers", "layers scenegraph graph node switch");
+
+    // Events
+    htmlcontent += createExampleBlock("events-basic", "Basic Events", "basic events");
+    htmlcontent += createExampleBlock("events-custom", "Custom Events", "custom basic events picking query");
+
+    // Nav
+    htmlcontent += createExampleBlock("navigation-basic", "Basic Navigation", "basic navigation first person orbit vr device orientation mobile");
+    htmlcontent += createExampleBlock("navigation-pov", "Viewpoints", "basic navigation pov viewpoint object");
+    htmlcontent += createExampleBlock("locnodes", "Locomotion Nodes", "navigation pov viewpoint locomotion graph");
+
+    // XPF
+    htmlcontent += createExampleBlock("xpf-basic", "XPF Basics (Virtual Tour)", "navigation 360 panorama xpf dpf viewpoint network virtual tour");
+    htmlcontent += createExampleBlock("xpf-scene", "XPF Scene", "navigation 360 panorama xpf dpf viewpoint network virtual tour");
+    htmlcontent += createExampleBlock("xpf-custom", "XPF Custom", "navigation 360 panorama xpf dpf viewpoint network virtual tour");
+    htmlcontent += createExampleBlock("xpf-basicsem", "XPF Semantic Masks", "navigation 360 panorama xpf dpf viewpoint virtual tour query");
+    htmlcontent += createExampleBlock("xpf-basicsem2", "XPF Semantic Hint Maps", "navigation 360 panorama xpf dpf viewpoint virtual tour query hints");
+
+    // Semantics
+    htmlcontent += createExampleBlock("semantics-basic", "Semantic annotations", "semantic annotation query object shape");
+
+    // Measurements
+    htmlcontent += createExampleBlock("measure", "Measurements", "sui spatial ui basic measure scene");
+
+    // PBR
+    htmlcontent += createExampleBlock("pbr-basic-object", "PBR Object", "basic pbr object lighting");
+    htmlcontent += createExampleBlock("pbr-basic-shadow", "PBR and Shadows", "basic pbr object lighting shadows");
+    htmlcontent += createExampleBlock("lightprobe", "Light-Probe", "pbr light probes lp");
+    htmlcontent += createExampleBlock("lightprobes", "Multiple Light-Probes", "pbr shadows object lighting light probes lp");
+    htmlcontent += createExampleBlock("pbr-lightprobes", "Multiple Light-Probes 2", "pbr lighting light probes lp");
+    htmlcontent += createExampleBlock("pbr-shadows", "Light-Probes and Shadows", "pbr shadows lighting light probes lp");
+    htmlcontent += createExampleBlock("advanced-materials1", "Advanced Materials", "pbr shadows advanced material refraction ior volume");
+    htmlcontent += createExampleBlock("hdr", "HDR", "pbr hdr exr lighting light");
+
+    // SUI
+    htmlcontent += createExampleBlock("sui-basic", "Spatial UI basics", "sui spatial ui basic");
+
+    // Multi-res
+    htmlcontent += createExampleBlock("multires", "Multi-Resolution", "multiresolution tiles lod detail large paging cesium");
+    htmlcontent += createExampleBlock("cesium-ion", "Cesium ION", "multiresolution tiles lod detail large paging cesium ion api integration");
+
+    // Sketchfab
+    htmlcontent += createExampleBlock("sketchfab", "SketchFab", "animation object basic pbr shadows light probes lp sketchfab api integration");
+
+    // App
+    htmlcontent += createExampleBlock("ATONServiceMain-basic", "Basic App", "ATONServiceMain basic web-ATONServiceMain setup update");
+
+    // FX
+    htmlcontent += createExampleBlock("fx-object", "FX basics", "fx composer effect object pbr shadows bloom dof");
+    htmlcontent += createExampleBlock("advanced-materials2", "Advanced Materials + FX", "pbr fx shadows advanced material refraction ior volume bloom lp light probes");
+
+    // VRoadcast
+    htmlcontent += createExampleBlock("vroadcast-basic", "Basic Collaborative", "vroadcast collaborative scene");
+    htmlcontent += createExampleBlock("vroadcast-populate", "Collaborative Scene Population", "vroadcast collaborative scene populate picking query");
+    htmlcontent += createExampleBlock("ATONServiceMain-remote", "Remote Control", "vroadcast collaborative scene remote control ATONServiceMain");
+
+    $("#mainContent").html(htmlcontent);
+
+    $("#idSearch").on("input change", ()=>{ 
+        searchTerm($('#idSearch').val().toLowerCase());
+    });
+
+    if (paramKeyword !== undefined && paramKeyword !== null) searchTerm(paramKeyword);
+});
+
+</script>
+</head>
+
+<body class="atonDefaultBody">
+    <div id="idTopToolbar" class="atonToolbar atonToolbar-top-left scrollableX shuTopToobar" style="background-color: rgba(0,0,0, 0.5);">
+        <a class='atonBTN' href='/'><img src='/res/icons/aton.png'></a>
+        <div class='atonBTN' onclick="$('#idSearch').val(''); showAllBlocks();"><img src='/res/icons/search-clear.png'></div>
+        <input id="idSearch" type="text" size="12" style="width:200px" >
+        <!-- <a class='atonBTN atonBTN-text' href='../apidoc/client/'>API docs</a>
+        <a class='atonBTN atonBTN-text' href='../apidoc/server/'>REST API docs</a> -->
+    </div>
+
+    <div style="text-align: center; margin-top: 60px">
+        <div class="atonTitle" id='idUserTitle'>Examples</div>
+        <div id='idDescr' class="descriptionText" style='background-color: rgba(0,0,0, 0.3); padding:16px'></div><br>
+        <div id='mainContent'></div>
+    </div>
+    
+    </body>

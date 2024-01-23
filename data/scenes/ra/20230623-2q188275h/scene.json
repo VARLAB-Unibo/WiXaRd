@@ -1,0 +1,33 @@
+{
+    "status": "complete",
+    "environment": {
+        "mainpano": {
+            "url": "samples/pano/hemi-bottom-orange.jpg"
+        },
+        "lightprobes": {
+            "auto": true
+        }
+    },
+    "scenegraph": {
+        "nodes": {
+            "main": {
+                "urls": [
+                    "samples/models/atoncube.gltf",
+                    "samples/models/atoncube-trans.gltf",
+                    "samples/models/set01/sfondo.gltf"
+                ]
+            },
+            "reconstruction": {
+                "urls": [
+                    "samples/models/atoncube.glb"
+                ]
+            }
+        },
+        "edges": {
+            ".": [
+                "main",
+                "reconstruction"
+            ]
+        }
+    }
+}

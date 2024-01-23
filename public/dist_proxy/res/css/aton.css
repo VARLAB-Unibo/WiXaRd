@@ -1,0 +1,2167 @@
+/*
+    Base CSS for DPF js
+    Bruno Fanini (bruno.fanini++AT++gmail.com)
+
+====================================================================*/
+
+/*
+@font-face {
+    font-family: 'atonfont';
+    src: url("../fonts/roboto/Roboto-Light.ttf");
+}
+*/
+
+/* Animations */
+@keyframes popupAnimation {
+    0% {
+        transform: translate(0%,-50%) scale(0.1);
+        }
+    100% {
+        transform: translate(0%,-50%) scale(1.0);
+        }
+}
+
+@keyframes loader {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: translate(-50%,-50%) rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: translate(-50%,-50%) rotate(360deg);
+  }
+}
+
+@keyframes pulseRec {
+    0% {
+        background-color: rgba(80,0,0, 0.25);
+        box-shadow: 0 0px 5px rgba(255,0,0, 0.5);
+    }
+    50% {
+        background-color: rgba(255,127,0, 0.5);
+        box-shadow: 0 0px 5px rgba(255,127,0, 0.8);
+    }
+    100% {
+        background-color: rgba(80,0,0, 0.25);
+        box-shadow: 0 0px 5px rgba(255,0,0, 0.5);
+    }
+}
+
+@keyframes pulseRed {
+    0% {
+        background-color: rgba(0,0,0, 0.25);
+        box-shadow: 0 0px 5px rgba(255,0,0, 0.1);
+    }
+    50% {
+        background-color: rgba(127,0,0, 0.7);
+        box-shadow: 0 0px 5px rgba(255,0,0, 0.8);
+    }
+    100% {
+        background-color: rgba(0,0,0, 0.25);
+        box-shadow: 0 0px 5px rgba(255,0,0, 0.1);
+    }
+}
+
+@keyframes slideFromRight {
+    0% {
+        transform: translateX(100%);
+        }
+    100% {
+        transform: translateX(0%);
+        }
+}
+
+@keyframes slideFromBottom {
+    0% {
+        transform: translateY(100%);
+        }
+    100% {
+        transform: translateY(0%);
+        }
+}
+
+/* Fonts */
+/*
+@font-face {
+    font-family: 'Segoe UI Local';
+    src: local('Segoe UI Semilight');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Segoe UI Web (West European)';
+    src: url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semilight.woff2') format('woff2'), url('https://static2.sharepointonline.com/files/fabric/assets/fonts/segoeui-westeuropean/segoeui-semilight.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+*/
+
+/*
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/titilliumweb/v14/NaPecZTIAOhVxoMyOr9n_E7fdM3mDbRS.woff2) format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+
+@font-face {
+    font-family: 'Titillium Web';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/titilliumweb/v14/NaPecZTIAOhVxoMyOr9n_E7fdMPmDQ.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+*/
+@font-face {
+    font-family: 'AFont';
+    font-style: normal;
+    src: url(../fonts/TitilliumWeb-Regular.ttf);
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/*=========================================================*/
+
+body {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    color: #FFF;
+
+    font-size: 14px;
+
+    /*font-family: Tahoma, Verdana, Geneva;*/
+    /*font-family: 'Segoe UI Local', 'Segoe UI Web (West European)';*/
+    font-family: "AFont";
+
+    touch-action: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    scrollbar-width: thin;
+    scrollbar-color: #FFF #333;
+}
+
+a {
+    color: inherit;
+}
+
+canvas {
+    display: block;
+
+    height: 100%;
+    width: 100%;
+
+    margin: 0px;
+    padding: 0px;
+
+    border: none;
+    outline: none;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+/*
+    cursor: default;
+    cursor: -moz-default;
+    cursor: -webkit-default;
+*/
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+
+/*
+    touch-action: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+*/
+}
+
+canvas:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.edit {
+    -webkit-box-shadow: inset 0 0 30px #fa0;
+    -moz-box-shadow: inset 0 0 30px #fa0;
+    box-shadow: inset 0 0 30px #fa0;
+}
+
+.grabbable {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+.grabbable:active { 
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+/* convenience class to hide elements  */
+.hide {
+    display: none;
+}
+/*
+.infoContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    padding: 0px 0px 0px 0px;
+
+    text-align: center;
+
+    z-index: 2;
+    margin: 0px 0px 0px 0px;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    overflow: hidden;
+}
+*/
+
+/*
+    Toolbars
+==========================*/
+.atonToolbar {
+  z-index: 110;
+
+  position: fixed;
+  display: inline-block;
+
+  white-space: nowrap;
+  overflow: hidden;
+
+  margin: 0;
+  padding: 5px;
+
+  color: #FFF;
+  text-align: center;
+
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.atonToolbar-top {
+    top: 0px;
+    width:100%;
+}
+
+.atonToolbar-top-right {
+    top: 0px;
+    right: 0px;
+    
+    width: 100%;
+    text-align: right;
+}
+
+.atonToolbar-top-left {
+    top: 0px;
+    left: 0px;
+    
+    width: 100%;
+    text-align: left;
+}
+
+.atonToolbar-bottom {
+    bottom: 0%;
+    width: 100%;
+}
+
+.atonToolbar-bottom-left {
+    bottom: 0%;
+    left: 0px;
+    width:100%;
+    text-align: left;
+}
+
+.atonToolbar-bottom-right {
+    bottom: 0%;
+    right: 0px;
+    /*width:100%;*/
+    text-align: right;
+}
+
+.atonToolbar-bg-edit {
+    background-color:rgba(255, 128, 0, 0.2);
+}
+
+.scrollableX {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+    -webkit-overflow-scrolling: touch;
+}
+.scrollableY {
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*white-space: nowrap;*/
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.atonSidePanelBG {
+    position: fixed;
+    z-index: 101;
+
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    /*background-color: rgba(0,0,0,0.5);*/
+
+    margin: 0px;
+    padding: 0px;
+}
+
+.atonSidePanelContainer {
+    z-index: 130;
+	position: absolute;
+
+    box-sizing: border-box;
+
+    height: 100%;
+    max-height: none;
+ 
+    width: 35%;
+    /*min-width: 400px;*/
+    max-width: 450px;
+
+    margin: 0px;
+    padding: 10px;
+/*
+    padding-top: 45px;
+
+    padding-right: 45px;
+    padding-bottom: 45px;
+
+    padding-top: 45px;
+*/
+    padding-bottom: 20px;
+
+    background-color: rgba(0,0,0, 0.5);
+    box-shadow: 0px 0px 20px rgba(0,0,0, 1);
+
+    top: 0%;
+    right: 0%;
+
+    animation: 0.5s ease-out 0s 1 slideFromRight;
+
+    backdrop-filter: blur(6px);
+}
+
+@media screen and (orientation: portrait) {
+    .atonSidePanelContainer {
+        width: 100%;
+        max-width: 100%;
+
+        height: 35%;
+        max-height: 400px;
+/*
+        padding-top: 10px;
+        padding-bottom: 20px;
+*/
+        bottom: 0px;
+        top: auto;
+        
+        margin: 0px;
+        
+        animation: 0.5s ease-out 0s 1 slideFromBottom;
+    }
+}
+/*
+@media screen and (max-width: 500px) {
+    .atonSidePanelContainer {
+        width: 90%;
+        margin: auto;
+    }
+}
+*/
+
+.atonSidePanelHeader {
+    display: block;
+
+    font-weight: bold;
+    font-size: larger;
+
+    text-align: center;
+
+    /*border-bottom: 1px solid white;*/
+    padding: 0px;
+    
+    margin: 0px;
+    margin-bottom: 10px;
+
+    min-height: 45px;
+    line-height: 45px;
+    
+    left: 0px;
+    right: 0px;
+
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.atonSidePanelCloseBTN {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+
+    pointer-events: auto;
+}
+
+@media screen and (orientation: portrait) {
+    .atonSidePanelCloseBTN {
+        top: 8px;
+    }
+}
+
+.atonSidePanelTopRightBTN {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+
+    pointer-events: auto;
+}
+
+@media screen and (orientation: portrait) {
+    .atonSidePanelTopRightBTN {
+        top: 8px;
+    }
+}
+
+.atonSidePanelContent {
+    display: block;
+    position: relative;
+/*
+    padding: 10px;
+    margin: auto;
+*/
+    width: 100%;
+    height: calc(100% - 50px);
+
+    padding: 0px;
+    margin: 0px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.atonSidePanelContent img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    margin-bottom: 10px;
+
+    border-radius: 5px;
+
+    width: 100%;
+    height: auto;
+}
+
+@media screen and (orientation: portrait) {
+    .atonSidePanelContent img {
+        display: inline;
+        float: left;
+        width: 50%;
+        max-width: 250px;
+
+        margin-right: 10px;
+    }
+}
+
+.atonSidePanelContent iframe {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+    margin-bottom: 10px;
+
+    border-radius: 5px;
+
+    width: 100%;
+    height: 300px;
+}
+
+@media screen and (orientation: portrait) {
+    .atonSidePanelContent iframe {
+        display: inline;
+        float: left;
+        width: 100%;
+        min-width: 200px;
+
+        margin-right: 10px;
+    }
+}
+
+.descriptionText {
+    position: relative;
+
+    text-shadow: 0px 0px 4px black;
+    text-align: left;
+/*
+    padding: 8px;
+*/
+}
+
+.atonCenterItem {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%,-50%);
+}
+
+/* Spinner/Loader */
+.atonCenterLoader {
+    position: fixed;
+    z-index: 10;
+
+    display:inline-block;
+    width: 100px;
+    height: 100px;
+
+    top: 50%;
+    left: 50%;
+    /*transform: translate(-50%,-50%);*/
+
+    pointer-events: none;
+
+    animation: loader 2s linear infinite;
+}
+
+.atonBGcover {
+    z-index: 0;
+    position: fixed;
+    
+    width: 100%;
+    height:100%;
+
+    margin: 0px;
+    
+    pointer-events: none;
+    
+    background-color:#CCC;
+
+    /*opacity: 0.5;*/
+
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
+    filter: blur(20px);
+}
+
+.atonCenterPointer {
+    position: fixed;
+    z-index: 10;
+
+    display:inline-block;
+    width: 32px;
+    height: 32px;
+
+    top: 50%;
+    left: 50%;
+    /*transform: translate(-50%,-50%);*/
+
+    pointer-events: none;
+}
+
+.atonUserBG {
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Gallery */
+.atonGalleryItem {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    border-radius: 10px;
+
+    margin: 5px;
+    padding: 0px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.atonCover {
+    border: 0px;
+    display: inline-block;
+    cursor: pointer;
+
+    text-align: center;
+    vertical-align: middle;
+
+    padding: 0px;
+    margin: 0px;
+
+    outline: none;
+}
+.atonCover img {
+    border-radius: 15px;
+    transition: all .1s ease-in-out;
+}
+.atonCover img:hover {
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 1.0);
+    transform: scale(1.1);
+}
+
+.atonBlurBG {
+    position: relative;
+
+    left: 0;
+    right: 0;
+    z-index: -10;
+    /*
+    display: block;
+    */
+    /*background-image: url();*/
+    width: 100%;
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+    opacity: 0.5;
+
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+
+}
+
+.atonKeyword {
+    display: inline-block;
+    border-radius: 5px;
+
+    text-decoration: none;
+
+    font-size: smaller;
+    text-shadow: none;
+
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5);
+
+    box-shadow: 0 0px 5px rgba(0,0,0, 0.5);
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    margin: 3px;
+    padding: 3px;
+}
+
+.atonKeywordActivable {
+    cursor: pointer;
+    box-shadow: 0 0px 5px rgba(0,0,0, 0.5);
+}
+
+.atonKeywordActivable:hover {
+    box-shadow: 0 0px 5px rgba(255, 255, 255, 1.0);
+}
+
+.atonAuthor {
+    text-shadow: 0px 0px 4px black;
+    text-align: center;
+    padding: 8px;
+}
+
+.atonCircled {
+    display:inline-block;
+
+    border-radius: 50%;
+    background-color: rgba(0,0,0, 0.2);
+    padding: 5%;
+}
+
+.atonCircledSmall {
+    display:inline-block;
+
+    border-radius: 50%;
+    background-color: rgba(0,0,0, 0.2);
+    padding: 10px;
+}
+
+.atonKey {
+    display: inline-block;
+    border-radius: 5px;
+
+    text-shadow: none;
+    font-weight: bold;
+
+    color: black;
+    background-color: rgba(255,255,255, 0.5);
+
+    box-shadow: 0 0px 5px rgba(0,0,0, 0.5);
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+    margin: 3px;
+    padding: 3px;
+}
+
+/* status messages */
+.error {
+    padding: 0.8rem 0;
+    background-color: rgba(127, 0, 0, 0.5);
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    text-align: center;
+}
+
+/* icon / button */
+.atonBTN {
+    border: 0px;
+    display: inline-block;
+    cursor: pointer;
+
+    text-decoration: none;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+/*
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+*/
+    color: #FFF;
+
+    min-width: 35px;
+    min-height: 35px;
+
+    line-height: 35px;
+    
+    text-align: center;
+    vertical-align: middle;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+
+    padding: 2px;
+    margin: 2px;
+
+    outline: none;
+}
+
+@media screen and (min-width: 600px) {
+    .atonBTN {
+        margin: 4px;
+        padding: 3px;
+    }
+}
+
+.atonBTN-text {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.atonBTN img {
+    position: relative;
+    vertical-align: middle;
+
+    height: 32px;
+    width: 32px;
+/*
+    top: 50%;
+    transform: translateY(-50%);
+    */
+}
+
+.atonBTN span {
+    padding: 0 5px;
+}
+
+.atonSmallIcon {
+    height: 16px;
+    width: 16px;
+    vertical-align: middle;
+    margin: 4px;
+}
+.atonDefIcon {
+    height: 32px;
+    width: 32px;
+    vertical-align: middle;
+    margin: 4px;
+}
+.atonBigIcon {
+    height: 64px;
+    width: 64px;
+    vertical-align: middle;
+    margin: 8px;
+}
+
+.atonBTN-large {
+    width: 80%;
+
+    padding: 10px;
+    line-height: 30px;
+
+    font-size: large;
+    border-radius: 15px;
+}
+
+.atonBTN-horizontal {
+    display: block;
+}
+
+.atonBTN:hover {
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 1.0);
+}
+
+.atonBTN-red {
+    background-color: rgba(127, 0, 0, 0.5);
+}
+.atonBTN-red:hover {
+    box-shadow: 0 0px 10px rgba(255, 0, 0, 1.0);
+}
+
+.atonBTN-yellow {
+    background-color: rgba(127, 127, 0, 0.5);
+}
+.atonBTN-yellow:hover {
+    box-shadow: 0 0px 10px rgba(255, 255, 0, 1.0);
+}
+
+.atonBTN-orange {
+    background-color: rgba(127, 64, 0, 0.5);
+}
+.atonBTN-orange:hover {
+    box-shadow: 0 0px 10px rgba(255, 127, 0, 1.0);
+}
+
+.atonBTN-green {
+    background-color: rgba(0, 127, 0, 0.5);
+}
+.atonBTN-green:hover {
+    box-shadow: 0 0px 10px rgba(0, 255, 0, 1.0);
+}
+
+.atonBTN-blue {
+    background-color: rgba(0, 0, 127, 0.5);
+}
+.atonBTN-blue:hover {
+    box-shadow: 0 0px 10px rgba(0, 0, 255, 1.0);
+}
+
+.atonBTN-cyan {
+    background-color: rgba(0, 127, 127, 0.5);
+}
+.atonBTN-cyan:hover {
+    box-shadow: 0 0px 10px rgba(0, 255, 255, 1.0);
+}
+
+.atonBTN-white {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: black;
+}
+.atonBTN-white:hover {
+    box-shadow: 0 0px 10px rgba(255, 255, 255, 1.0);
+}
+
+.atonBTN-gray {
+    background-color: rgba(127, 127, 127, 0.5) !important;
+}
+.atonBTN-gray:hover {
+    box-shadow: 0 0px 10px rgba(127, 127, 127, 1.0);
+}
+
+.atonBTN-rec {
+    animation-name: pulseRec;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.atonBTN-pulseRed {
+    animation-name: pulseRed;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.switchedON {
+    background-color: rgba(127, 127, 127, 0.5);
+
+    /*
+    box-shadow: 0 0px 5px rgba(255, 255, 255, 1.0);
+    border: 2px solid white;
+    */
+
+    -webkit-box-shadow:inset 0px 0px 0px 2px white, 0 0px 10px white, inset 0 0px 10px white;
+    -moz-box-shadow:inset 0px 0px 0px 2px white, 0 0px 10px white, inset 0 0px 10px white;
+    box-shadow:inset 0px 0px 0px 2px white, 0 0px 10px white, inset 0 0px 10px white;
+}
+.switchedON:hover {
+    -webkit-box-shadow:inset 0px 0px 0px 2px white, 0 0px 10px white;
+    -moz-box-shadow:inset 0px 0px 0px 2px white, 0 0px 10px white;
+    box-shadow:inset 0px 0px 0px 2px white, 0 0px 10px white;
+}
+
+
+.atonMenu {
+    background-color: rgba(0, 0, 0, 1.0);
+    color: white;
+}
+
+.atonMenuEntry {
+    /*background-color: rgba(255, 255, 255, 0.5);*/
+    border-radius: 5px;
+
+    width: 100%;
+    padding: 5px;
+
+    cursor: pointer;
+    color: white;
+
+    vertical-align: middle;
+
+    font-size: smaller;
+
+    outline: none;
+}
+
+.atonSidePanelRight {
+    position: absolute;
+    width: 90%;
+    max-width: 300px;
+
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    
+    padding: 8px;
+    padding-top: 70px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.atonPhotonSidePanel {
+    position: absolute;
+    width: 90%;
+    max-width: 300px;
+    left: 0px;
+    top: 70px;
+    bottom: 50px;
+    padding: 8px;
+
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.atonPhotonCounter {
+    position: absolute; 
+    z-index: 2; 
+    /*margin-left: -22px;
+    margin-top: 5px;*/
+    margin: 0px;
+    padding: 0px;
+
+    transform: translate(-150%,10%);
+
+    text-align: center;
+    text-shadow: 0px 0px 4px black;
+
+    font-size: 60%;
+}
+
+.atonPhotonChat {
+    margin: 4px;
+    /*font-size: smaller;*/
+    outline: none;
+    text-align: left;
+
+    overflow-y: auto;
+    height: 80%;
+}
+
+.atonPhotonChatBox {
+    width: 100%;
+    height: 200px;
+
+    display: block;
+
+    /*background-color: rgba(255,255,255, 0.5);*/
+
+    padding: 4px;
+
+    text-align:left;
+    text-shadow: 0px 0px 4px black;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    /*white-space: nowrap;*/
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.atonPhotonChatMessage {
+    display: block;
+}
+
+.atonPhotonChatBlock {
+    margin-top: 10px;
+    color: white;
+    text-shadow: 0px 0px 4px black;
+}
+
+.atonPhotonhatUser {
+    background-color: rgb(255, 255, 255);
+    color: black;
+    padding: 4px;
+    border-radius: 5px;
+
+    text-shadow: none;
+
+    cursor: pointer;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.atonPhotonU0 {
+    background-color: rgba(127, 0, 0, 0.5);
+    box-shadow: 0 0px 10px rgba(255, 0, 0, 1.0), inset 0 0px 8px rgba(255, 0, 0, 0.5);
+}
+.atonPhotonU0:hover {
+    box-shadow: 0 0px 10px rgba(255,0,0, 1.0);
+}
+.atonPhotonU1 {
+    background-color: rgba(127, 127, 0, 0.5);
+    box-shadow: 0 0px 10px rgba(255, 255, 0, 1.0), inset 0 0px 8px rgba(255, 255, 0, 0.5);
+}
+.atonPhotonU1:hover {
+    box-shadow: 0 0px 10px rgba(255,255,0, 1.0);
+}
+.atonPhotonU2 {
+    background-color: rgba(0, 127, 0, 0.5);
+    box-shadow: 0 0px 10px rgba(0, 255, 0, 1.0), inset 0 0px 8px rgba(0, 255, 0, 0.5);
+}
+.atonPhotonU2:hover {
+    box-shadow: 0 0px 10px rgba(0,255,0, 1.0);
+}
+.atonPhotonU3 {
+    background-color: rgba(0, 127, 127, 0.5);
+    box-shadow: 0 0px 10px rgba(0, 255, 255, 1.0), inset 0 0px 8px rgba(0, 255, 255, 0.5);
+}
+.atonPhotonU3:hover {
+    box-shadow: 0 0px 10px rgba(0,255,255, 1.0);
+}
+.atonPhotonU4 {
+    background-color: rgba(0, 0, 127, 0.5);
+    box-shadow: 0 0px 10px rgba(0, 0, 255, 1.0), inset 0 0px 8px rgba(0, 0, 255, 0.5);
+}
+.atonPhotonU4:hover {
+    box-shadow: 0 0px 10px rgba(0,0,255, 1.0);
+}
+.atonPhotonU5 {
+    background-color: rgba(127, 0, 127, 0.5);
+    box-shadow: 0 0px 10px rgba(255, 0, 255, 1.0), inset 0 0px 8px rgba(255, 0, 255, 0.5);
+}
+.atonPhotonU5:hover {
+    box-shadow: 0 0px 10px rgba(255,0,255, 1.0);
+}
+
+.atonPhotonU0-bg {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+.atonPhotonU1-bg {
+    background-color: rgba(255, 255, 0, 0.1);
+}
+.atonPhotonU2-bg {
+    background-color: rgba(0, 255, 0, 0.1);
+}
+.atonPhotonU3-bg {
+    background-color: rgba(0, 255, 255, 0.1);
+}
+.atonPhotonU4-bg {
+    background-color: rgba(0, 0, 255, 0.1);
+}
+.atonPhotonU5-bg {
+    background-color: rgba(255, 0, 255, 0.1);
+}
+
+.atonPhotonChatUsername {
+    display: inline-block;
+    padding: 4px;
+    margin-top: 3px;
+
+    box-shadow: none;
+    border-radius: 4px;
+
+    padding-right: 10px;
+    padding-left: 10px;
+
+    cursor: pointer;
+}
+
+.atonPhotonVidStream {
+    position: fixed;
+    z-index: 150;
+
+    display: inline-block;
+    cursor: pointer;
+
+    width: 120px;
+    height: auto;
+
+    left: 8px;
+    top: 55px;
+
+    border-radius: 5px;
+}
+
+/*
+.atonVRCvidStream:hover {
+    transform: scale(1.2);
+}
+*/
+
+/*
+@media only screen and (max-width: 800px){
+    .atonVRCsidePanel {
+        width: 40%;
+    }
+
+}
+*/
+
+.atonScreenshotContainer {
+    max-width: 300px;
+    padding: 0px;
+    margin: auto;
+}
+
+.atonScreenshotContainer img {
+    width: 100%;
+    height: auto;
+
+    border-radius: 5px;
+}
+
+/*
+    Popups
+==========================*/
+.atonPopupContainer {
+    position: fixed;
+    z-index: 10;
+
+    text-align: center;
+
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    /*background-color: rgba(0,0,0,0.7);*/
+
+    margin: 0px;
+    padding: 0px;
+
+    /*backdrop-filter: blur(6px);*/
+}
+
+.atonPopup {
+    display: inline-block;
+/*
+    position: fixed;
+    top: 100px;
+    bottom: 100px;
+    left: 100px;
+    right: 100px;
+*/
+    position: relative;
+    margin: auto;
+
+    max-width: 70%;
+    max-height: 70%;
+    
+    top: 50%;
+    transform: translate(0%,-50%);
+
+    padding: 12px;
+
+	border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0,0,0, 1);
+    
+    background-color: rgba(0,0,0,0.7);
+    
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    transform-origin: center;
+    animation: 0.2s ease-out 0s 1 popupAnimation;
+
+    backdrop-filter: blur(6px);
+}
+
+@media screen and (orientation: portrait){
+/*@media screen and (max-width: 600px){*/
+    .atonPopup {
+        width: auto;
+        max-width: auto;
+    }
+}
+
+.atonPopupLarge {
+    width: 90%;
+}
+@media screen and (orientation: portrait){
+    /*@media screen and (max-width: 800px){*/
+        .atonPopupLarge {
+            width: auto;
+            max-width: none;
+        }
+}
+
+.atonPopupCompact {
+    max-width: 750px;
+}
+@media screen and (orientation: portrait){
+    /*@media screen and (max-width: 800px){*/
+        .atonPopupCompact {
+            width: auto;
+            max-width: none;
+        }
+}
+
+.atonPopupTitle {
+    display: block;
+
+    font-weight: bold;
+    font-size: larger;
+
+    text-align: center;
+
+    /*border-bottom: 1px solid white;*/
+    padding: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
+    
+    margin: 0px;
+    margin-bottom: 10px;
+
+    min-height: 40px;
+    line-height: 40px;
+    
+    left: 0px;
+    right: 0px;
+
+    border-radius: 10px;
+    background-color: black;
+}
+
+/* Popup description container */
+.atonPopupDescriptionContainer {
+    text-align: initial;
+    width: 100%;
+
+    margin: auto;
+}
+
+.atonPopupDescriptionContainer p {
+    text-align: left;
+    margin: 5px;
+}
+
+.atonPopupDescriptionContainer img {
+    display: inline-block;
+
+    max-width: 100%;
+    height: auto;
+
+    margin: 5px;
+}
+
+@media screen and (max-width: 500px){
+    .atonPopupDescriptionContainer img {
+        display: block;
+        max-width: 100%;
+    }
+}
+
+.atonPopupDescriptionContainer iframe {
+    display: inline;
+    border: 0px;
+
+    max-width: 100%;
+
+    margin: 5px;
+}
+
+.atonQRcontainer {
+    display: inline-block;
+
+    text-align: center;
+    background-color: white;
+
+    padding: 20px;
+    border-radius: 10px;
+
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+}
+
+.atonQRcontainer img {
+    width: 100%;
+    height: auto;
+}
+
+.atonPopupLabelContainer {
+    position: fixed;
+    z-index: 10;
+
+    text-align: center;
+
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+
+    margin: 0px;
+    padding: 0px;
+
+    pointer-events: none;
+}
+
+.atonPopupLabel {
+    display: inline-block;
+
+    text-align: center;
+    font-size: larger;
+    vertical-align: middle;
+
+    background-color: rgba(0,0,0, 0.5);
+    border-radius: 10px;
+
+    box-shadow: 0px 0px 10px rgba(0,0,0, 0.5);
+
+    /*backdrop-filter: blur(6px);*/
+
+    padding: 12px;
+    margin: 0px;
+
+    height: 30px;
+    min-width: 60px;
+
+    /*transform-origin: top;*/
+}
+
+
+/*
+    Scrollbars
+==========================*/
+*::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+*::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left: 0px solid #000;
+    border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: #FFF;
+    border-radius: 4px;
+    box-shadow: 0px 0px 2px black;
+}
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #FFF;
+    box-shadow: 0px 0px 4px rgba(255,255,255, 0.9);
+}
+
+
+/*
+    Input Types
+==========================*/
+input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;  
+    background: black;
+    outline: none;
+    opacity: 0.5;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+input[type=range]:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; 
+    background: white;
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+}
+/*
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    margin: 9.7px 0;
+
+    outline: none;
+}
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 6.5px #000000, 0px 0px 1px #0d0d0d;
+    background: #7f7f7f;
+    border-radius: 5.8px;
+    border: 0px solid #000000;
+}
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -9.7px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #c1c1c1;
+}
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 4.6px;
+    cursor: pointer;
+    box-shadow: 1px 1px 6.5px #000000, 0px 0px 1px #0d0d0d;
+    background: #7f7f7f;
+    border-radius: 5.8px;
+    border: 0px solid #000000;
+}
+input[type=range]::-moz-range-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 24px;
+    width: 24px;
+    border-radius: 6px;
+    background: #ffffff;
+    cursor: pointer;
+}
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 4.6px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #3d3d3d;
+    border: 0px solid #000000;
+    border-radius: 11.6px;
+    box-shadow: 1px 1px 6.5px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+    background: #7f7f7f;
+    border: 0px solid #000000;
+    border-radius: 11.6px;
+    box-shadow: 1px 1px 6.5px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 24px;
+    width: 24px;
+    border-radius: 6px;
+    background: #ffffff;
+    cursor: pointer;
+    height: 4.6px;
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #7f7f7f;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #c1c1c1;
+}
+*/
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background: white;
+    border-radius: 5px;
+    border: 2px solid gray;
+    line-height: 12px;
+    vertical-align: middle;
+    margin: 5px;
+    outline: none;
+}
+input[type="checkbox"]:checked {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    background: #00FF00;
+}
+input[type="checkbox"]:hover {
+    border: 2px solid white;
+    box-shadow: 0px 0px 10px white;
+}
+
+input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background: white;
+    border-radius: 50%;
+    border: 2px solid gray;
+    line-height: 12px;
+    vertical-align: middle;
+    margin: 5px;
+    outline: none;
+}
+
+input[type="radio"]:not(:checked) {
+    background: white;
+}
+input[type="radio"]:checked {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    background: #00FF00;
+}
+input[type="radio"]:hover {
+    border: 2px solid white;
+    box-shadow: 0px 0px 10px white;
+}
+
+
+input[type="text"]{
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+
+    border: 2px solid gray;
+    line-height: 12px;
+    vertical-align: middle;
+    margin: 5px;
+
+    height: 32px;
+    border-radius: 5px;
+
+    background: white;
+}
+input[type="text"]:hover {
+    border: 2px solid white;
+    box-shadow: 0px 0px 10px white;
+}
+
+input[type="password"]{
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+
+    border: 2px solid gray;
+    line-height: 12px;
+    vertical-align: middle;
+    margin: 5px;
+
+    height: 32px;
+    border-radius: 5px;
+
+    background: white;
+}
+input[type="password"]:hover {
+    border: 2px solid white;
+    box-shadow: 0px 0px 10px white;
+}
+
+input[type="number"]{
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+
+    border: 2px solid gray;
+    line-height: 12px;
+    vertical-align: middle;
+    margin: 5px;
+
+    height: 32px;
+    border-radius: 5px;
+
+    background: white;
+}
+input[type="number"]:hover {
+    border: 2px solid white;
+    box-shadow: 0px 0px 10px white;
+}
+
+/* SELECT */
+.select {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 90%;
+    height: 25px;
+}    
+.select select {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    padding: 12px 12px;
+    outline: 0;
+    border: 0px solid #000000;
+    border-radius: 5px;
+    background: #414141;
+    color: #ffffff;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.select select::-ms-expand {
+    display: none;
+}
+.select select:hover,
+.select select:focus {
+    color: #000000;
+    background: #cccccc;
+}
+.select select:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+.selectArrow {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 6px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 0px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    pointer-events: none;
+}
+.select select:hover ~ .selectArrow,
+.select select:focus ~ .selectArrow {
+    border-color: #000000;
+}
+.select select:disabled ~ .selectArrow {
+    border-top-color: #cccccc;
+}
+
+
+
+/* Powered by */
+.poweredBy {
+    display: inline-block;
+    position: fixed;
+    z-index: 150;
+
+    bottom: 0px;
+    left: 0px;
+
+    color: #FFF;
+    text-shadow: 0px 0px 4px #000000;
+    font-size: 70%;
+
+    padding: 5px;
+
+    text-align: left;
+}
+
+.atonCode {
+    display: inline-block;
+
+    color: black;
+    font-family: monospace;
+    background-color: rgba(255,255,255, 0.9);
+
+    padding: 10px;
+    text-align: left;
+
+    -moz-user-select: text !important;
+    -khtml-user-select: text !important;
+    -webkit-user-select: text !important;
+    -o-user-select: text !important;
+    user-select: text !important;
+
+    touch-action: auto;
+    -webkit-user-drag: auto;
+}
+
+code {
+    display: inline-block;
+    text-align: left;
+
+    vertical-align: middle;
+
+    overflow-x: auto;
+
+    color: white;
+    font-family: monospace;
+    font-size: smaller;
+    background-color: rgba(0,0,0, 0.5);
+
+    padding: 7px;
+}
+
+.atonGradientBottomDark {
+    background: linear-gradient( to bottom,rgba(0, 0, 0, 0),rgba(0, 0, 0, 0.5));
+}
+
+.atonDefaultBody {
+    background-color: #BBB;
+    color: #FFF;
+
+    /*font-family: 'Titillium Web';*/ /*'Segoe UI Local', 'Segoe UI Web (West European)';*/
+    font-family: "AFont";
+
+    background-image: url("../bg.jpg");
+
+    background-position: top;
+    background-repeat: no-repeat;
+    /*background-size: cover;*/
+    background-size: auto;
+
+    overflow-y: auto;
+/*
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+*/
+    touch-action: auto;
+    -webkit-user-drag: auto;
+
+    text-align: center;
+}
+
+label {
+    font-size: smaller;
+}
+
+.shuMainContainer {
+    text-align:center;
+    margin-top: 60px;
+}
+
+.shuTopToobar {
+    background-color: rgba(0,0,0, 0.8);
+    box-shadow: 0px 0px 15px rgba(0,0,0, 1);
+
+    backdrop-filter: blur(6px);
+}
+
+.shuBlockNode {
+    display: inline-block;
+    vertical-align: top;
+
+    padding: 5px;
+    border-radius: 20px;
+
+    width: 90%;
+
+    max-width: 500px;
+    min-width: 250px;
+    
+    margin: auto;
+    
+    /*float: left; */
+
+    background-color:rgba(200,255,200, 0.2);
+    box-shadow: 0px 0px 20px rgba(0,20,0, 1);
+}
+
+.shuBlockNode:hover {
+    box-shadow: 0px 0px 20px rgba(255,255,255, 0.5);
+}
+
+.shuFooter {
+    display: block;
+    width: 100%;
+
+    text-align: center;
+    text-shadow: 0px 0px 4px black;
+
+    margin-top: 20px;
+    padding: 10px;
+
+    background-color:rgba(0,0,0, 0.4);
+    box-shadow: 0px 0px 20px rgba(0,0,0, 0.5);
+
+    backdrop-filter: blur(6px);
+}
+
+.shuStatNum {
+    font-size: x-large;
+    font-weight: bold;
+    display: block;
+    margin: 5px;
+}
+
+.shuStatNumSmall {
+    font-size: small;
+    display: block;
+    margin: 5px;
+}
+
+.atonTitle {
+    display: block;
+    position: relative;
+
+    font-size: x-large;
+    text-align: center;
+
+    background-color: rgba(255,255,255, 0.5);
+    color: #000;
+    font-weight: bold;
+
+    border-radius: 0px;
+    box-shadow: 0 0px 5px rgba(0,0,0, 1.0);
+
+    margin: 0px;
+    padding: 10px;
+}
+
+.atonBlockGroup {
+    text-align: center;
+
+    display:inline-block;
+    width: 100%;
+    height: 100%;
+
+    margin: 0px;
+}
+
+.atonHeader {
+    display: block;
+    margin: 10px;
+    color: black;
+}
+
+.atonBlockTitle {
+    display: block;
+    position: relative;
+
+    /*cursor: pointer;*/
+
+    text-align: center;
+
+    text-decoration: none;
+
+    background-color: rgba(0,0,0, 0.5);
+    border-radius: 10px;
+
+    padding: 15px;
+    margin: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+
+    font-size: larger;
+    font-weight: bold;
+
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
+    /*border: 2px solid black;*/
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.atonBlockSubTitle {
+    display: block;
+    position: relative;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    background-color: rgba(0,0,0, 0.3);
+    border-radius: 10px;
+
+    padding: 10px;
+    margin: 0px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    font-weight: bold;
+
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
+    /*border: 2px solid black;*/
+}
+
+
+.atonOptionBlockShort {
+    display: inline-block;
+    
+    max-width: 200px;
+    
+    margin: 8px; 
+    padding: 4px; 
+    
+    vertical-align: top;
+}
+
+.atonOptionBlock {
+    display: inline-block;
+    vertical-align: top;
+
+    padding: 5px;
+    border-radius: 5px;
+    margin: 2px;
+
+    /*white-space: nowrap;*/
+}
+
+.atonSubtitle {
+    font-weight: bold;
+    border-bottom: 2px solid rgba(255,255,255, 0.5);
+    padding: 3px;
+    margin: 5px;
+}
+
+.atonBlockCut {
+    display: inline-block;
+    position: relative;
+
+    margin: 0px;
+    padding: 10px;
+    width: 90%;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    /*border-radius: 20px;*/
+
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    margin-bottom: 10px;
+}
+
+.atonBlockRound {
+    position: relative;
+    display: inline-block;
+
+    text-shadow: 0px 0px 4px black;
+    background-color: rgba(0, 0, 0, 0.3);
+    /*border-radius: 20px;*/
+
+    border-radius: 10px;
+
+    margin: 4px;
+    padding: 8px;
+}
+
+.atonProcessBTN {
+/*
+    display: block;
+    position: relative;
+*/
+/*
+    z-index: 100;
+    position: fixed;
+
+    bottom: 0px;
+*/
+    width: 80%;
+    min-height: 60px;
+
+    font-size: large;
+
+    border-radius: 20px;
+    box-shadow: 0 0px 5px rgba(0,0,0, 1.0);
+
+    /*border: 2px solid black;*/
+}
+
+table {
+    color: #FFF;
+    margin: 20px;
+
+    width: 100%;
+
+    /*font-size: larger !important;*/
+
+    margin-left:auto; 
+    margin-right:auto;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+
+/*
+    border-collapse: collapse;
+    border: 1px solid white;
+*/
+}
+
+th {
+    padding: 10px;
+    font-weight: bold;
+    background-color: rgba(0,0,0, 0.8);
+}
+
+tr {
+    padding: 10px;
+    background-color: rgba(0,0,0, 0.3);
+}
+
+tr:hover {
+    background-color: rgba(0,0,0, 0.4);
+}
+
+td {
+    padding: 5px;
+}
+
+details {
+    text-align: left;
+    padding: 5px;
+}
+
+summary {
+    cursor: pointer;
+
+    padding-bottom: 5px;
+    padding-top: 5px;
+
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+/* Apple iphone-inline-video  */
+.IIV::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button {
+    opacity: 0;
+    pointer-events: none;
+    width: 5px;
+}
+
+/* Landing page */
+/*
+#idScenes {
+    width:50%;
+    max-width:500px;
+    margin: 1rem auto;
+}
+
+#sid {
+    width: 80%;
+    display:inline-block;
+}
+
+#go-btn {
+    width: 15%;
+    display: inline-block;
+}
+
+#atonLogo {
+	width: 100px;
+	height: auto;
+	display: block;
+	margin: 1rem auto;
+}
+*/
+.landing-nav {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+}
+    
+.landing-nav a {
+    display: inline-block;
+}
+
+/*
+a[href="/examples"] {
+    background-image: url('/res/icons/samples.png');
+    background-size: contain;
+}
+
+a[href="/shu/scenes"] {
+    background-image: url('/res/icons/user.png');
+    background-size: contain;
+}
+*/

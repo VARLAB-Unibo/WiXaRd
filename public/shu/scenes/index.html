@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+<meta name="mobile-web-ATONServiceMain-capable" content="yes">
+<link rel="icon" href="../appicon.png" sizes="512x512" type="image/png">
+
+<!-- Add iOS meta tags and icons -->
+<meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+<meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+<meta name="apple-mobile-web-ATONServiceMain-title" content="New Scene">
+<link rel="apple-touch-icon" href="../appicon.png">
+<meta name="description" content="Users">
+<!-- Add meta theme-color -->
+<meta name="theme-color" content="#000000" />
+
+<title>Scenes</title>
+<link rel="stylesheet" type="text/css" href="../../res/css/aton.css">
+<script type="text/javascript" src="../../vendors/vendors.min.js"></script>
+<script type="text/javascript" src="../../dist/THREE.bundle.js"></script>
+<script type="text/javascript" src="../../dist/ATON.min.js"></script>
+<script type="text/javascript" src="../shu.js"></script>
+
+<script>
+
+let user = undefined;
+
+let renderGallery = ()=>{
+    if (user === undefined) return;
+
+    let htmlcontent = "";
+/*
+    htmlcontent += "<div class='atonTitle'>Your Scenes</div><br>";
+    htmlcontent += "<a href='/shu/newscene/' class='atonBTN atonBTN-green atonBTN-horizontal'><img src='"+ATON.PATH_RES+"icons/scene.png'>New Scene</a>";
+    htmlcontent += "<br><br>";
+*/
+    htmlcontent += "<div class='atonGalleryItem' style='width:250px; height:320px; background-color:rgba(0,255,0, 0.1)'>";
+    htmlcontent += "<div class='atonBlurBG' style='width:250px; height:320px; background-image: url(\""+ATON.PATH_RES+"scenecover.png"+"\")'></div>";
+    htmlcontent += "<a href='/shu/newscene/' class='atonBTN atonBTN-green atonCenterItem' style='padding:20px'><h3>New Scene</h3></a>"; // <img src='"+ATON.PATH_RES+"icons/scene.png' style='width:64px; height:64px'><br>
+    htmlcontent += "</div>";
+
+    $('#idContent').append(htmlcontent);
+
+    $.getJSON( ATON.PATH_RESTAPI+"scenes/own", (data)=>{
+
+        data.sort( SHU.sidCompare );
+
+        for (let i in data){
+            let scene = data[i];
+            let sid = scene.sid;
+
+            let urlCover = (scene.cover)? ATON.PATH_SCENES+sid+"/cover.png" : ATON.PATH_RES+"scenecover.png";
+
+            let shtml = "";
+            shtml += "<div id='s"+i+"' class='atonGalleryItem' style='background-color:rgba(255,255,255, 0.1)'>";
+
+            // gallery item bg
+            shtml += "<div class='atonBlurBG' style='width:250px; height:320px; background-image: url(\""+urlCover+"\")'></div>";
+
+            // gallery item content
+            shtml += "<div style='width:250px; height:320px; position:absolute; top:0; left:0'>";
+            shtml += "<div class='atonBlockSubTitle'>"+sid+"</div><br>";
+            shtml += "<a class='atonCover' href='/s/"+sid+"'>";
+            shtml += "<img src='"+urlCover+"' style='width:200px; height:auto'>";
+            shtml += "</a>";
+
+            shtml += "<br>";
+            shtml += "<a class='atonBTN atonBTN-text' href='/shu/scenes/?s="+sid+"'><img src='"+ATON.PATH_RES+"icons/settings.png'>Manage</a>";
+            shtml += "<a class='atonBTN atonBTN-text atonBTN-orange' href='/s/"+sid+"?uip=editor'><img src='"+ATON.PATH_RES+"icons/edit.png'>Edit</a>";
+            shtml += "</div>";
+            
+/*
+            shtml += "<div id='delAsk-"+i+"' class='atonBTN atonBTN-red'><img src='"+ATON.PATH_RES+"icons/trash.png'></div>";
+
+            shtml += "<div id='clone-"+i+"' class='atonBTN'><img src='"+ATON.PATH_RES+"icons/clone.png'></div>";
+            
+            shtml += "<div id='delConf-"+i+"' style='display:none;'>Delete this scene: are you sure?<br>";
+            shtml += "<div id='del-"+i+"' class='atonBTN atonBTN-red'>YES</div><div id='delNo-"+i+"' class='atonBTN'>NO</div>";
+            shtml += "</div>";
+*/     
+            shtml += "</div>";
+
+            $('#idContent').append(shtml);
+
+/*
+            $('#clone-'+i).click(()=>{
+                ATON.Utils.postJSON(ATON.PATH_RESTAPI+"clone/scene", {sid: sid}, (newsid)=>{
+                    console.log(newsid);
+                });
+            });
+
+            $('#delAsk-'+i).click(()=>{
+                $('#delConf-'+i).show();
+                $('#go-'+i).hide();
+                $('#delAsk-'+i).hide();
+                $('#clone-'+i).hide();
+
+                $("#s"+i).css("background-color","rgba(127,0,0,0.3)");
+
+                $('#del-'+i).click(()=>{
+                    ATON.Utils.postJSON(ATON.PATH_RESTAPI+"del/scene", {sid: sid}, (b)=>{
+                        if (b) $("#s"+i).hide();
+                    });
+                });
+
+                $('#delNo-'+i).click(()=>{
+                    $('#delConf-'+i).hide();
+                    $("#s"+i).css("background-color","");
+                    $('#go-'+i).show();
+                    $('#delAsk-'+i).show();
+                    $('#clone-'+i).show();
+                });
+            });
+*/
+        }
+        
+    });
+};
+
+let renderScene = (sid)=>{
+    if (user === undefined) return;
+
+    $('#idContent').html("");
+    $('#idContent').css("background-color","rgba(0,0,0,0.3)");
+
+    let htmlcontent = "";
+    htmlcontent += "<div class='atonTitle'>"+sid+"</div><br>";
+
+    $('#idContent').append(htmlcontent);
+
+    $.getJSON( ATON.PATH_RESTAPI+"scene/"+sid, (data)=>{
+        //console.log(data);
+
+        let shtml = "";
+        shtml += "<div id='idSceneBlock' class='atonBlockRound' style='background-color: rgba(0,0,0,0.0); text-align:justify; width:90%'>";
+
+        // Main
+        //shtml += "<div style='position:absolute; width:100%; top:0; left:0'>";
+
+        // Title
+        if (data.title) shtml += "<div class='atonBlockSubTitle'>"+data.title+"</div><br>";
+        else shtml += "<div class='atonBlockSubTitle'>-Untitled-</div><br>";
+        //else shtml += "<div class='atonBlockTitle'><input id='idTitleText' type='text' maxlength='30' size='30' placeholder='Set a title...'><div id='idNewTitle' class='atonBTN'>Ok</div></div><br>";
+
+        shtml += "<div style='display:block; width:90%; min-height:250px; vertical-align:top'>";
+
+        // cover
+        shtml += "<a href='/s/"+sid+"' class='atonCover' style='display:inline-block; width:250px; float:left' >";
+        shtml += "<img id='idCoverImg' src='"+ATON.PATH_RES+"scenecover.png'>";
+        shtml += "</a>";
+
+        // Scene fields
+        shtml +="<div style='text-align:left; display:inline-block; vertical-align:top; padding-left:20px; width:300px'>";
+        //if (data.status) shtml += "<b>Status:</b><span class='atonKeyword'>"+data.status+"</span><br><br>";
+        if (data.scenegraph){
+            shtml += "<b>Scene-graph nodes:</b><br>";
+            for (let n in data.scenegraph.nodes) shtml += "<span class='atonKeyword'>"+n+"</span>";
+            shtml += "<br><br>";
+        }
+        if (data.semanticgraph){
+            shtml += "<b>Semantic-graph nodes:</b><br>";
+            for (let n in data.semanticgraph.nodes) shtml += "<span class='atonKeyword'>"+n+"</span>";
+            shtml += "<br><br>"; 
+        }
+        if (data.environment){
+            shtml += "<b>Main panorama:</b><br>";
+            if (data.environment.mainpano) shtml += "<span class='atonKeyword'>yes</span>";
+            else shtml += "<span class='atonKeyword'>no</span>";
+            shtml += "<br><br>"; 
+        }
+        shtml += "</div>";
+
+        shtml +="<div style='text-align:left; display:inline-block; vertical-align:top; padding-left:20px; max-width:500px'>";
+        if (data.description) shtml += JSON.parse(data.description);
+        shtml += "</div>";
+        
+        shtml += "</div>";
+
+        // Actions
+        shtml += "<div style='text-align:center'>";
+        shtml += "<div id='idActions'>";
+        shtml += "<a id='idOpen' href='/s/"+sid+"' class='atonBTN atonBTN-green' style='width:150px'><img src='"+ATON.PATH_RES+"icons/hathor.png'>Open</a>";
+        shtml += "<div id='idPublic' class='atonBTN' style='width:150px'></div>";
+        shtml += "<div id='idClone' class='atonBTN' style='width:150px'><img src='"+ATON.PATH_RES+"icons/clone.png'>Clone</div>";
+        if (sid.startsWith(user)) shtml += "<div id='delAsk' class='atonBTN atonBTN-red' style='width:150px'><img src='"+ATON.PATH_RES+"icons/trash.png'>Delete</div>";
+        shtml += "</div><br>";
+
+        if (sid.startsWith(user)){
+            shtml += "<div id='idConfirmDel' style='display:none'>";
+            shtml += "Are you sure to DELETE this scene? ";
+            shtml += "<div id='delYES' class='atonBTN atonBTN-red'>YES</div>";
+            shtml += "<div id='delNO' class='atonBTN'>NO</div>";
+            shtml += "</div>";
+            shtml += "</div>";
+        }
+
+        //shtml += "</div>";
+        // blur BG
+        //shtml += "<div id='idBGBlur' class='atonBlurBG' style='width:100%;'></div>";
+        
+        shtml += "</div>";
+
+        $('#idContent').append(shtml);
+
+        // Scene data info
+        $.getJSON( ATON.PATH_RESTAPI+"info/scene/"+sid, (data)=>{
+            if (data === undefined) return;
+            let bPublic = false;
+
+            if (data.cover){
+                let impath = ATON.PATH_SCENES+sid+"/cover.png";
+                $('#idCoverImg').attr("src", impath);
+                //$('#idBGBlur').css("background-image", "url('"+impath+"')");
+            }
+
+            if (data.public){
+                $("#idPublic").html("<img src='"+ATON.PATH_RES+"icons/lock.png'>Make Private");
+                bPublic = true;
+            }
+            else {
+                $("#idPublic").html("<img src='"+ATON.PATH_RES+"icons/users.png'>Make Public");
+            }
+
+            $('#idPublic').click(()=>{
+                let O = {};
+                O.sid = sid;
+                O.vis = bPublic? "private" : "public";
+                ATON.Utils.postJSON(ATON.PATH_RESTAPI+"visibility/scene", O, (data)=>{
+                    if (data) window.location.reload(true);
+                });
+            });
+        });
+
+        $('#idNewTitle').click(()=>{
+            let title = $('#idTitleText').val();
+            if (title === undefined || title.length < 2) return;
+
+            console.log(title);
+            let E = {};
+            E.title = title;
+
+            ATON.Utils.postJSON(ATON.PATH_RESTAPI+"edit/scene", {sid: sid, data: E, mode:"ADD"}, (r)=>{
+                if (r) window.location.reload(true);
+            });
+            
+        });
+
+        $('#delAsk').click(()=>{
+            $("#idActions").hide();
+            $("#idConfirmDel").show();
+            //$("#idSceneBlock").css("background-color","rgba(127,0,0,0.3)");
+            $('#idContent').css("background-color","rgba(127,0,0,0.3)");
+        });
+
+        $('#delYES').click(()=>{
+            ATON.Utils.postJSON(ATON.PATH_RESTAPI+"del/scene", {sid: sid}, (b)=>{
+                if (b) window.location.href = "/shu/scenes";
+            });
+        });
+
+        $('#delNO').click(()=>{
+            $("#idActions").show();
+            $("#idConfirmDel").hide(); 
+            //$("#idSceneBlock").css("background-color","rgba(0,0,0,0.0)");  
+            $('#idContent').css("background-color","rgba(0,0,0,0.3)");   
+        });
+
+        $('#idClone').click(()=>{
+            ATON.Utils.postJSON(ATON.PATH_RESTAPI+"clone/scene", {sid: sid}, (newsid)=>{
+                if (newsid) window.location.href = "/s/"+newsid;
+            });
+        });
+
+    });
+};
+
+window.addEventListener( 'load', ()=>{
+
+    SHU.uiAddMainToolbar("idTopToolbar");
+
+    let urlParams = new URLSearchParams(window.location.search);
+    let sid = urlParams.get('s');
+
+    ATON.Utils.checkAuth((data)=>{
+        user = data.username;
+
+        if (data.username){
+            if (sid && sid.length>2) renderScene(sid);
+            else renderGallery();
+        }
+        else {
+            window.location.href = "/shu/auth/?url="+window.location.href;
+        }
+    });
+
+});
+
+</script>
+</head>
+
+<body class="atonDefaultBody" >
+    <div id="idTopToolbar" class="atonToolbar atonToolbar-top-left scrollableX shuTopToobar"></div>
+
+    <div id='idContent' class='shuMainContainer'></div>
+    
+</body>

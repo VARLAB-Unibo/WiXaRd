@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="mobile-web-ATONServiceMain-capable" content="yes">
+    <link rel="icon" href="/res/aton-logo.png" sizes="512x512" type="image/png">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+
+    <!-- Add iOS meta tags and icons -->
+    <meta name="apple-mobile-web-ATONServiceMain-capable" content="yes">
+    <meta name="apple-mobile-web-ATONServiceMain-status-bar-style" content="black">
+    <meta name="apple-mobile-web-ATONServiceMain-title" content="ATON Sample">
+    <link rel="apple-touch-icon" href="/res/aton-logo.png">
+    <meta name="description" content="ATON Sample">
+    <!-- Add meta theme-color -->
+    <meta name="theme-color" content="#000000"/>
+
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="/res/css/aton.css">
+
+    <script type="text/javascript" src="/vendors/vendors.min.js"></script>
+
+    <script type="text/javascript" src="/dist/THREE.bundle.js"></script>
+    <script type="text/javascript" src="/dist/ATON.min.js"></script>
+
+    <script>
+
+        // (function($){
+        //     // Bind the function to global jQuery object.
+        //     $.fn.reveal = function(){
+        //         // Arguments is a variable which is available within all functions
+        //         // and returns an object which holds the arguments passed.
+        //         // It is not really an array, so by calling Array.prototype
+        //         // he is actually casting it into an array.
+        //         var args = Array.prototype.slice.call(arguments);
+        //
+        //         // For each elements that matches the selector:
+        //         return this.each(function(){
+        //             // this is the dom element, so encapsulate the element with jQuery.
+        //             var img = $(this),
+        //                 src = img.data("src");
+        //
+        //             // If there is a data-src attribute, set the attribute
+        //             // src to make load the image and bind an onload event.
+        //             src && img.attr("src", src).load(function(){
+        //                 // Call the first argument passed (like fadeIn, slideIn, default is 'show').
+        //                 // This piece is like doing img.fadeIn(1000) but in a more dynamic way.
+        //                 img[args[0]||"show"].apply(img, args.splice(1));
+        //             });
+        //         });
+        //     }
+        // }(jQuery));
+
+
+        window.addEventListener('load', () => {
+            // Setup UI
+            ATON.FE.realize();
+            ATON.FE.addBasicLoaderEvents();
+
+            // Load Scene
+            ATON.FE.loadSceneID("samples/basic");
+
+            // Add some HTML UI
+            ATON.FE.uiAddButtonHome("idTopToolbarRight");
+            ATON.FE.uiAddButtonFullScreen("idTopToolbarRight");
+            ATON.FE.uiAddButtonVR("idTopToolbarRight");
+            // ATON.FE.uiAddButtonTalk("idTopToolbarRight")
+            ATON.FE.uiAddButtonStreamFocus("idTopToolbarRight") // Per far vedere il puntatore dell'altra persona
+            ATON.FE.uiAddButtonPhoton("idTopToolbarRight");
+            ATON.FE.uiAddButtonUser("idTopToolbarRight");
+            ATON.FE.uiAddButtonQR("idBottomToolbar")
+            ATON.FE.uiAddButtonScreenshot("idBottomToolbar")
+            ATON.FE.uiAddButtonNav("idBottomToolbar")
+            // ATON.FE.uiAddButtonMainVideoPanoPlayPause("idBottomToolbar") //TODO: da capire
+            ATON.FE.uiAddButtonEditMode("idBottomToolbar")
+
+            // Setup SUI
+            let suiButtons = [];
+            suiButtons.push(new ATON.SUI.Button("SUI_VR"));
+            suiButtons.push(new ATON.SUI.Button("SUI_Home"));
+            // suiButtons.push(new ATON.SUI.Button("SUI_Talk"));
+            suiButtons.push(new ATON.SUI.Button("SUI_Photon"));
+            suiButtons.push(new ATON.SUI.Button("SUI_User"));
+            suiButtons.push(new ATON.SUI.Button("SUI_QR"));
+            suiButtons.push(new ATON.SUI.Button("SUI_Screenshot"));
+
+            ATON.getUINode("SUI_VR")
+                .setText("")
+                .setBaseColor(ATON.MatHub.colors.red)
+                .setIcon(ATON.PATH_RES + "icons/vr.png")
+                .onSelect = () => {
+                ATON.XR.toggle();
+            };
+
+            ATON.getUINode("SUI_Home")
+                .setIcon(ATON.PATH_RES + "icons/home.png")
+                .onSelect = () => {
+                ATON.Nav.requestHome();
+            };
+
+            // ATON.getUINode("SUI_Talk")
+            //     .setIcon(ATON.PATH_RES + "icons/talk.png")
+            //     .onSelect = () => {
+            //     ATON.FE.talkButtonPressed() // TODO mettere che l'icona si illumina come su desktop
+            // };
+
+            ATON.getUINode("SUI_Photon")
+                .setIcon(ATON.PATH_RES + "icons/photon.png")
+                .onSelect = () => {
+                ATON.FE.photonButtonPressed()
+            };
+
+            ATON.getUINode("SUI_User")
+                .setIcon(ATON.PATH_RES + "icons/user.png")
+                .onSelect = () => {
+                // TODO
+            };
+
+            ATON.getUINode("SUI_QR")
+                .setIcon(ATON.PATH_RES + "icons/qr.png")
+                .onSelect = () => {
+                // TODO
+            };
+
+            ATON.getUINode("SUI_Screenshot")
+                .setIcon(ATON.PATH_RES + "icons/sshot.png")
+                .onSelect = () => {
+                // TODO
+            };
+
+            for (let b in suiButtons) {
+                suiButtons[b].onHover = () => {
+                    ATON.AudioHub.playOnceGlobally(ATON.PATH_RES + "audio/blop.mp3");
+                    suiButtons[b].setBackgroundOpacity(0.9);
+                };
+
+                suiButtons[b].onLeave = () => {
+                    suiButtons[b].setBackgroundOpacity(0.5);
+                };
+            }
+
+            ATON.SUI
+                .createToolbar(suiButtons)
+                // .setPosition(-4.0, 0.2, 1.0)
+                // .setRotation(1.0, 3.14, 0)
+                .setPosition(-4.0, 0.2, 1.0)
+                .setRotation(1.57, 2.5, -1.57)
+                .setScale(5.0)
+                .attachToRoot();
+
+            // VEDERE HATOR IMPORTANTE RIPARTIRE DA LA
+
+            let panelNode = ATON.SUI.buildPanelNode("testone", ATON.PATH_RES + "point-mask.png")
+
+            panelNode
+                .setPosition(0, 1, 0)
+                .setRotation(0.0, 6.28, 0)
+                .setScale(1.0)
+                .attachToRoot();
+
+            let panelNode2 = ATON.SUI.buildPanelNode("testone2", ATON.PATH_RES + "scenecover.png")
+
+            panelNode2
+                // .setPosition(0.0, 0.0, 0.0)
+                .setScale(0.7)
+                .attachTo(panelNode);
+
+            let pane = ATON.getUINode("testone2")
+            pane
+                .onHover = () => {
+                console.log("pane")
+            }
+
+            // Setup
+            // ATON.SUI.setSelectorModel(items[currItem].url);
+            ATON.SUI.setSelectorRadius(0.5); // Questo non funziona perchè ogni volta viene resettato al valore di default
+            // ATON.FE.useMouseWheelToScaleSelector(0.0002);
+            //
+            // SketchFab search
+            ATON.setAPIToken("sketchfab", "32c118a0d7f14e58a9a3f26557ab7870");
+
+            let next = ""
+
+            function loadSketchfabModels(url) {
+
+                $.getJSON(url, res => {
+                    next = res.next
+                    console.log(res)
+                    let results = res.results
+                    for (i = 0; i < results.length; i++) {
+                        let name = results[i]["name"]
+                        let embedUrl = results[i]["embedUrl"]
+                        let assetId = results[i]["uid"]
+
+                        $("#container").append("" +
+                            "<div class='card' style='width: 18rem; cursor: pointer; display: inline-block; margin: 1%'> " +
+                            "<iframe class='card-img-top' title=" + name + " " +
+                            "frameborder='0' allowfullscreen mozallowfullscreen='true' webkitallowfullscreen='true'" +
+                            "allow='autoplay; fullscreen; xr-spatial-tracking' xr-spatial-tracking " +
+                            "execution-while-out-of-viewport execution-while-not-rendered web-share " +
+                            "src=" + embedUrl + "?autospin=1&autostart=1&camera=0" +
+                            "> </iframe> " +
+                            "<div class=\"card-body\">" +
+                            "<p style='font-size: 1.5em; font-weight: bold'> " + name + " </p>" +
+                            "<button data-bs-dismiss='offcanvas' id=" + assetId + " class='btn btn-success' >Add Model</button>" +
+                            "</div>" +
+                            "</div>")
+
+                        $("#" + assetId).on("click", () => {
+                            let point = ATON.getSceneQueriedPoint();
+                            let scale = ATON.SUI.getSelectorRadius();
+                            scale = 0.5
+
+                            if (point) {
+                                ATON.createSceneNode("sample-skf")
+                                    .loadSketchfabAsset(assetId)
+                                    .setPosition(point)
+                                    .attachToRoot();
+
+                                // Alert other users in the same scene
+                                ATON.Photon.fireEvent("sketchfabSpawnEvent", {
+                                    assetId: assetId,
+                                    pos: point,
+                                    scale: scale
+                                });
+                            }
+                        })
+                    }
+
+                })
+            }
+
+            // EVENT HANDLER
+            $("#searchButton").on("click", () => {
+
+                $("#container").empty(); // remove elements of the previous research
+
+                $("#loadOtherModelsButton").removeAttr("hidden")
+
+                let searchVal = $("#search").val()
+
+                loadSketchfabModels("https://api.sketchfab.com/v3/search?count=5&type=models&q=" + searchVal)
+            })
+
+            $("#loadOtherModelsButton").on("click", () => {
+                loadSketchfabModels(next)
+            })
+
+            ATON.on("KeyPress", (k) => {
+                if (k === 'x') {
+                    // panelNode.addToPosition(1, 1, 1)
+                    ATON.Nav.requestPOVbyNode(panelNode)
+                    // let point = ATON.getSceneQueriedPoint();
+                    // let scale = ATON.SUI.getSelectorRadius();
+                    // scale = 0.5
+                    //
+                    // if (point) {
+                    //     // We create and place the item
+                    //     ATON.createSceneNode()
+                    //         .load(items[currItem].url)
+                    //         .setPickable(items[currItem].pickable)
+                    //         .setPosition(point)
+                    //         .setScale(scale)
+                    //         .attachToRoot();
+                    //
+                    //     // Alert other users in the same scene
+                    //     ATON.Photon.fireEvent("myNetworkSpawnEvent", {
+                    //         item: currItem,
+                    //         pos: point,
+                    //         scale: scale
+                    //     });
+                    // }
+                }
+            });
+
+            // We handle incoming remote items placement fom other users
+            ATON.Photon.on("sketchfabSpawnEvent", (data) => {
+                let assetId = data.assetId;
+                let point = data.point;
+                let scale = data.scale;
+
+                ATON.createSceneNode("sample-skf")
+                    .loadSketchfabAsset(assetId)
+                    .setPosition(point)
+                    .setScale(scale)
+                    .attachToRoot();
+            });
+
+            // We handle incoming remote items placement fom other users
+            ATON.Photon.on("myNetworkSpawnEvent", (data) => {
+                let item = items[data.item];
+
+                ATON.createSceneNode()
+                    .load(item.url)
+                    .setPickable(item.pickable)
+                    .setPosition(data.pos.x, data.pos.y, data.pos.z)
+                    .setScale(data.scale)
+                    .attachToRoot();
+            });
+
+            ATON.on("AllNodeRequestsCompleted", () => {
+                // ATON.toggleShadows(true);
+                // ATON.setNeutralAmbientLight(0.9);
+                ATON.Nav.requestHome(0.1);
+
+                //ATON.Photon.connect();
+
+                // ATON.FE.setImmersiveVR() // TODO Per l'Hololens, non si può attivare automaticamente perchè richiede l'attivazione dell'utente
+            });
+        })
+    </script>
+</head>
+
+<body oncontextmenu="return false;">
+<!-- Top Toolbar -->
+<!--<div id="idTopToolbarLeft" class="atonToolbar atonToolbar-top-left"></div>-->
+<div id="idTopToolbarRight" class="atonToolbar atonToolbar-top-right"></div>
+
+<!-- Bottom Toolbar -->
+<div id="idBottomToolbar" class="atonToolbar atonToolbar-bottom"></div>
+
+<!-- Main Popup -->
+<div id="idPopup" class="atonPopupContainer" style="display:none;"></div>
+
+<!-- Loader -->
+<div id="idLoader" class="atonCenterLoader" style="display:none;"></div>
+
+
+<button class="btn btn-light" type="button"
+        style="z-index: 1000; position: absolute; bottom: 0.1em; margin: 0 0 0.5em 0.2em; color: black"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Sketchfab 3D Models
+</button>
+<!--<img src="./sketchfab-logo-text.png" class="btn atonToolbar atonToolbar-bottom w-25" alt="sketchfabLogo"-->
+<!--     data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">-->
+
+<div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="offcanvasBottom"
+     aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+        <!--        <h4 class="offcanvas-title" id="offcanvasBottomLabel">Sketchfab 3D Models</h4>-->
+        <img src="sketchfab-logo-text.png" class="img-fluid w-25" alt="sketchfabLogo">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body small" style="padding-top: 0">
+        <div class="row">
+            <div class="col input-group mb-3 w-25">
+                <input id="search" type="text" class="form-control" placeholder="Search 3D Model"
+                       aria-label="Recipient's username" aria-describedby="searchButton">
+                <button id="searchButton" class="btn btn-outline-primary" type="button">Search</button>
+            </div>
+            <div class="col">
+                <button id="loadOtherModelsButton" hidden class="btn btn-outline-primary" type="button"
+                        style="float: right">Load
+                    Other Models
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="offcanvas-body small" style="padding-top: 0">
+        <div id="container" style="white-space: nowrap"></div>
+    </div>
+
+</div>
+
+</body>
