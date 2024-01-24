@@ -2,6 +2,9 @@
 
 [Lorenzo Stacchio](https://www.unibo.it/sitoweb/lorenzo.stacchio2/en),
 [Giacomo Vallasciani](https://www.unibo.it/sitoweb/giacomo.vallasciani2/en),
+[Giulio Augello](https://www.linkedin.com/in/giulio-augello-958537194/?originalSubdomain=it),
+[Silvano Carradori](https://www.linkedin.com/in/scarradori98/),
+[Pasquale Cascarano](https://www.unibo.it/sitoweb/pasquale.cascarano2/en),
 [Gustavo Marfia](https://www.unibo.it/sitoweb/gustavo.marfia/en)<br/>
 
 | [IEEE VR '24 Oral Presentation at XRIOS Workshop](https://sites.google.com/view/xrios/home?authuser=0) | [paper]() | [project page]() | [video](https://www.youtube.com/watch?v=rw9mkeeRMuA)
@@ -63,11 +66,11 @@ Install [NodeJs 18.16.1](https://nodejs.org/en/blog/release/v18.16.1).
 
 Then go in the root directory of the project and execute ```npm-install```.
 
-Create a sketchfab profile and copy paste the [API Token](https://sketchfab.com/settings/password) in the ```sketchfab_token``` field within the ```config\users.json```.
-If required, put it also in the pop-up that could spawn in the homepage.
+Create a sketchfab profile and copy and paste the [API Token](https://sketchfab.com/settings/password) in the ```sketchfab_token``` field within the ```config\users.json```.
+If required, put it also in the pop-up that could spawn on the homepage.
 
 ### Execute Wixard
 
-Again in the root directory, execute ```npm run start-wixard```, which sould start a localhost server at [https://localhost:8084](https://localhost:8084).
+Again in the root directory, execute ```npm run start-wixard```, which should start a localhost server at [https://localhost:8084](https://localhost:8084).
 
 To execute the remote streaming pipeline execute in another terminal window ```npm run start-proxy```
