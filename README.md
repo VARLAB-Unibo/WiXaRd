@@ -20,17 +20,40 @@ WiXaRd is developed to address the growing demand for immersive experiences in v
 4. **Annotation System:** The system incorporates an annotation feature, providing users with the ability to visualize and report various types of information in a spatial context.
 5. **Remote Streaming Mechanism:** WiXaRd includes an interactable remote-streaming mechanism, enabling users to access content or services from anywhere, even on devices with limited hardware capabilities.
 
+## Comparison with Related Works
+
+|                   | XRAG | C   | 2DC | SC  | RR  | ANN | EDI | GP  | OS  |
+|-------------------|------|-----|-----|-----|-----|-----|-----|-----|-----|
+| **Industrial**      |      |     |     |     |     |     |     |     |     |
+| [50]              | ✗    | ✓   | ✗   | ✗   | ✓   | ✗   | ✗   | ✗   | ✗   |
+| [48]              | ✗    | ✓   | ✗   | ✗   | ✗   | ✗   | ✗   | ✗   | ✗   |
+| [45, 46]          | ≈    | ✓   | ✓   | ✓   | ✓   | ✓   | ✗   | ≈   | ✗   |
+| [25]              | ✗    | ✓   | ✗   | ✓   | ✗   | ✗   | ✗   | ✓   | ✗   |
+| [27]              | ✗    | ✓   | ✓   | ✓   | ✗   | ✗   | ✗   | ✓   | ✗   |
+| [49]              | ✗    | ✓   | ✗   | ✓   | ✓   | ✓   | ✗   | ≈   | ✗   |
+| **Academic**      |      |     |     |     |     |     |     |     |     |
+| [1]               | ✓    | ✓   | ✗   | ✗   | ✓   | ✗   | ✗   | ✗   | ✗   |
+| [20]              | ✗    | ✓   | ✓   | ≈   | ✗   | ✗   | ✗   | ✗   | ✗   |
+| [24]              | ✓    | ✓   | ✓   | ✗   | ✗   | ✗   | ✗   | ✗   | ✗   |
+| [28]              | ✓    | ✓   | ✗   | ≈   | ✗   | ✗   | ✗   | ✗   | ✗   |
+| [37]              | ✓    | ✓   | ✓   | ≈   | ≈   | ≈   | ✗   | ✗   | ✗   |
+| [11]              | ✓    | ✓   | ✓   | ≈   | ✗   | ✓   | ✗   | ✗   | ✓   |
+| **WiXaRd**        | ✓    | ✓   | ✓   | ✓   | ✓   | ✓   | ✓   | ✓   | ✓   |
+
+*Comparison between the considered systems considering different relevant features: XR Device Agnostic (XRAG), Collaborative (C), 2D device compatibility (2DC), Scene Customization (SC), Remote Rendering (RR), Annotation System (ANN), External Database Integration (EDI), General Purpose (GP), and Open-source (OS).*
+
+
 ## Implementation Details
 
 WiXaRd utilizes WebXR-based technologies, offering compatibility with any XR device. The implementation includes a modular architecture for ease of use and adaptability.
 
-**Technological Stack:** 
- * Node JS;
- * Three JS;
- * Puppeteer;
- * ATON;
- * Photon;
- * WebXR APIs;
+**Technological Stack:**
+ * [Node JS](https://nodejs.org/);
+ * [Three JS](https://threejs.org/);
+ * [Puppeteer](https://pptr.dev/);
+ * [ATON](https://github.com/phoenixbf/aton);
+ * [Photon](https://www.photonengine.com/);
+ * [WebXR APIs](https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API);
 
 
 ## How to Use
