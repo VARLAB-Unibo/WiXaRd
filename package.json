@@ -9,7 +9,7 @@
     "build-three": "webpack --config ./services/tools/webpack.three.js",
     "build-aton": "webpack --config ./services/tools/webpack.aton.js",
     "start-nodemon": "nodemon services/Proxy.service.js",
-    "start-aton": "webpack --config ./services/tools/webpack.aton.js && node services/ATON.service.main.js",
+    "start-wixard": "webpack --config ./services/tools/webpack.aton.js && node services/ATON.service.main.js",
     "build-both": "webpack --config ./services/tools/webpack.three.js && webpack --config ./services/tools/webpack.aton.js && node services/ATON.service.main.js",
     "start-maton": "webpack --config ./services/tools/webpack.aton.js && node services/ATON.service.main.mjs",
     "start-proxy": "webpack --config ./services/tools/webpack.proxy.js && node Proxy.service.js",
