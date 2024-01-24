@@ -57,7 +57,17 @@ WiXaRd utilizes WebXR-based technologies, offering compatibility with any XR dev
 
 
 ## How to Use
-For detailed instructions on setting up and using WiXaRd, please refer to the documentation available in the [WiXaRd implementation](#) (link will be available after the conference).
 
+### Installation
+Install [NodeJs 18.16.1](https://nodejs.org/en/blog/release/v18.16.1).
 
-Thank you for your interest in WiXaRd! We look forward to building a collaborative and immersive future together.
+Then go in the root directory of the project and execute ```npm-install```.
+
+Create a sketchfab profile and copy paste the [API Token](https://sketchfab.com/settings/password) in the ```sketchfab_token``` field within the ```config\users.json```.
+If required, put it also in the pop-up that could spawn in the homepage.
+
+### Execute Wixard
+
+Again in the root directory, execute ```npm run start-wixard```, which sould start a localhost server at [https://localhost:8084](https://localhost:8084).
+
+To execute the remote streaming pipeline execute in another terminal window ```npm run start-proxy```

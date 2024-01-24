@@ -1,18 +1,10 @@
 [
     {
-        "username": "ra",
-        "password": "ra2020",
+        "username": "Wizard",
+        "password": "WeLoveWixard",
         "admin": true,
-        "sketchfab_token": "1f5fc99a914a42d294cdfd41d343cba1",
+        "sketchfab_token": "",
         "items": [
-            {
-                "name": "sketchfab_point",
-                "type": "sketchfab",
-                "url": "https://sketchfab.com/3d-models/sketchfab-point0-centered-ec940bc5ef624913bf17345ce4d89803",
-                "tag": "importer",
-                "assetId": "ec940bc5ef624913bf17345ce4d89803",
-                "thumbnail": "https://media.sketchfab.com/models/ec940bc5ef624913bf17345ce4d89803/thumbnails/88748ca771544388ac12118cf301d120/2a9f372cafd94a8395a82cb8d3542fc5.jpeg"
-            },
             {
                 "name": "sofa",
                 "type": "sketchfab",
@@ -46,20 +38,5 @@
                 "thumbnail": "https://media.sketchfab.com/models/d0e4db0c87ce4245a34d71dc4ad4b832/thumbnails/0ea8fbe13d53493cab9c5ac90cf3fb95/2599e6dc425c408ab02b93cd1fd95e86.jpeg"
             }
         ]
-    },
-    {
-        "username": "bastet",
-        "password": "bas2020",
-        "sketchfab_token": ""
-    },
-    {
-        "username": "alien",
-        "password": "aliens",
-        "sketchfab_token": "67753422ee7b40ad83b3105ed080a86f"
-    },
-    {
-        "username": "ciao",
-        "password": "ciao2",
-        "sketchfab_token": ""
     }
 ]
