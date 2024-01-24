@@ -626,7 +626,7 @@ ATON._setupBaseListeners = () => {
                 break
             case 'w':
                 // FORWARD AIR WALKING
-                if (ATON.Nav._mode === ATON.Nav.MODE_FPW) {
+                if (ATON.Nav._mode === ATON.Nav.MODE_FP) {
                     const target = new THREE.Vector3()
                     ATON.Nav._camera.getWorldDirection(target)
                     ATON.Nav._controls.target.add(target.multiplyScalar(0.1))
@@ -634,7 +634,7 @@ ATON._setupBaseListeners = () => {
                 break;
             case 's':
                 // BACKWARD AIR WALKING
-                if (ATON.Nav._mode === ATON.Nav.MODE_FPW) {
+                if (ATON.Nav._mode === ATON.Nav.MODE_FP) {
                     const target = new THREE.Vector3();
                     ATON.Nav._camera.getWorldDirection(target);
                     const old_target = ATON.Nav._controls.target.clone();
@@ -645,7 +645,7 @@ ATON._setupBaseListeners = () => {
                 break;
             case 'a':
                 // LEFT AIR WALKING
-                if (ATON.Nav._mode === ATON.Nav.MODE_FPW) {
+                if (ATON.Nav._mode === ATON.Nav.MODE_FP) {
                     const target = new THREE.Vector3();
                     const sideMoveVector = new THREE.Vector3();
                     ATON.Nav._camera.getWorldDirection(target);
@@ -661,7 +661,7 @@ ATON._setupBaseListeners = () => {
 
             case 'd':
                 // RIGHT AIR WALKING
-                if (ATON.Nav._mode === ATON.Nav.MODE_FPW) {
+                if (ATON.Nav._mode === ATON.Nav.MODE_FP) {
                     const target = new THREE.Vector3();
                     const sideMoveVector = new THREE.Vector3();
                     ATON.Nav._camera.getWorldDirection(target);

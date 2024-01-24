@@ -3049,7 +3049,7 @@ HATHOR.popupNav = () => {
     if (!ATON.FE.popupShow(htmlcontent)) return;
 
     ATON.FE.uiAddButtonFirstPerson("idNMfp");
-    ATON.FE.uiAddButtonFirstPersonWalking("idNMfpw");
+    // ATON.FE.uiAddButtonFirstPersonWalking("idNMfpw");
     ATON.FE.uiAddButtonDeviceOrientation("idNMdevori");
     //ATON.FE.uiAddButtonVR("idNMvr");
 

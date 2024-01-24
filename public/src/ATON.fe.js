@@ -1881,7 +1881,7 @@ FE.popupNav = () => {
     }
 
     FE.uiAddButtonFirstPerson("idNMfp");
-    FE.uiAddButtonFirstPersonWalking("idNMfpw");
+    // FE.uiAddButtonFirstPersonWalking("idNMfpw");
     FE.uiAddButtonDeviceOrientation("idNMdevori");
     FE.uiAddButtonVR("idNMvr");
     FE.uiAddButtonAR("idNMar");
