@@ -546,7 +546,7 @@ HATHOR.resetSelectionMode = () => {
     $("#btn-editing").removeClass("atonBTN-rec");
     $("#btn-write-annotation").removeClass("atonBTN-rec");
 
-    ATON.getUINode("sui_measure").switch(false);
+    // ATON.getUINode("sui_measure").switch(false);
     ATON.getUINode("sui_annconvex").switch(false);
     ATON.getUINode("sui_ann-sphere").switch(false);
     ATON.getUINode("sui_editing").switch(false);
@@ -554,8 +554,8 @@ HATHOR.resetSelectionMode = () => {
     ATON.getUINode("sui_addmesh").switch(false);
     ATON.getUINode("sui_delmesh").switch(false);
     ATON.getUINode("sui_scene_layer").switch(false);
-    ATON.getUINode("sui_environment").switch(false);
-    ATON.getUINode("sui_scene").switch(false);
+    // ATON.getUINode("sui_environment").switch(false);
+    // ATON.getUINode("sui_scene").switch(false);
 
     // HATHOR.updateSelectionMode(HATHOR.SELECTION_STD);
 

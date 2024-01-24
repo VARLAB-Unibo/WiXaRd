@@ -1028,6 +1028,10 @@ SceneHub.addSceneParser = (key, parser) => {
 // [C] Sends JSON edit to server node
 // previously used: https://tools.ietf.org/html/rfc6902
 SceneHub.sendEdit = (patch, mode, onComplete) => {
+    console.log("SceneHub._bLoading: ", SceneHub._bLoading)
+    console.log("SceneHub._bEdit: ", SceneHub._bEdit)
+    console.log("patch: ", patch)
+    console.log("mode: ", mode)
     if (SceneHub._bLoading || !SceneHub._bEdit) {
         return;
     }
@@ -1038,10 +1042,6 @@ SceneHub.sendEdit = (patch, mode, onComplete) => {
         mode = SceneHub.MODE_ADD;
     }
 
-    // console.log("SceneHub._bLoading: ", SceneHub._bLoading)
-    // console.log("SceneHub._bEdit: ", SceneHub._bEdit)
-    // console.log("patch: ", patch)
-    // console.log("mode: ", mode)
 
     let sid = SceneHub.currID;
 
@@ -1067,9 +1067,9 @@ SceneHub.sendEdit = (patch, mode, onComplete) => {
         // Update local scene JSON
         // TODO: improve traffic by applying patch to local json, and NOT by receiving entire JSON 
         success: (r) => {
-            //console.log(r);
+            console.log("ERREEEEEEEEEEE: ", r);
             if (r) {
-                // console.log("r: ", r)
+                console.log("r: ", r)
                 SceneHub.currData = r;
             }
             //console.log(ATON.currSceneHub.data);

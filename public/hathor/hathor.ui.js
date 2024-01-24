@@ -179,7 +179,7 @@ HATHOR.uiEditorUser = async () => {
         //     return;
         // }
 
-        // ATON.FE.uiSetEditMode(true, "idTopToolbar");
+        ATON.FE.uiSetEditMode(true, "idTopToolbar");
         // ATON.FE.uiAddButtonEditMode("idTopToolbar");
 
         // ATON.FE.uiAddButton("idTopToolbar", "scene", HATHOR.popupScene, "Scene");
