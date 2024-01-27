@@ -74,3 +74,17 @@ If required, put it also in the pop-up that could spawn on the homepage.
 Again in the root directory, execute ```npm run start-wixard```, which should start a localhost server at [https://localhost:8084](https://localhost:8084).
 
 To execute the remote streaming pipeline execute in another terminal window ```npm run start-proxy```
+
+
+
+## Cite the work 
+```
+@inproceedings{stacchio2024towards,
+  title={WiXaRd: Towards a holistic distributed platform for multi-party and cross-reality WebXR experiences},
+  author={Stacchio, Lorenzo and Vallasciani, Giacomo and Augello, Giulio and Carradori, Silvano and Cascarano, Pasquale Marfia, Gustavo},
+  booktitle={2024 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)},
+  pages={to appear},
+  year={2024},
+  organization={IEEE}
+}
+```
