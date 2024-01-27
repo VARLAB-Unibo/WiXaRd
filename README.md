@@ -81,7 +81,7 @@ To execute the remote streaming pipeline execute in another terminal window ```n
 ```
 @inproceedings{stacchio2024towards,
   title={WiXaRd: Towards a holistic distributed platform for multi-party and cross-reality WebXR experiences},
-  author={Stacchio, Lorenzo and Vallasciani, Giacomo and Augello, Giulio and Carradori, Silvano and Cascarano, Pasquale Marfia, Gustavo},
+  author={Stacchio, Lorenzo and Vallasciani, Giacomo and Augello, Giulio and Carradori, Silvano and Cascarano, Pasquale and Marfia, Gustavo},
   booktitle={2024 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)},
   pages={to appear},
   year={2024},
